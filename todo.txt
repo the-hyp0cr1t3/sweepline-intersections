@@ -1,7 +1,3 @@
-- change project_name in
-    - name of include/<project_name> dir
-    - all text occurences
-
 - edit docs/mainpage.md
 
 - automate testing with Git Hooks
@@ -12,6 +8,14 @@
 ```
     - chmod +x pre-commit
     - use `git commit --no-verify` to circumvent
+
+
+
+- move LOGFILE to util.shpp
+
+
+
+
 
 
 References:

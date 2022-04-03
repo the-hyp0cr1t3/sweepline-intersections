@@ -1,5 +1,5 @@
 set(HEADER_LIST
-    "${PROJECT_SOURCE_DIR}/include/project_name/lib.hpp"
+    "${PROJECT_SOURCE_DIR}/include/sweepline_intersections/lib.hpp"
 )
 
 # headers are optional, but won't show up in IDEs unless listed

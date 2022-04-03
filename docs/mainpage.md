@@ -1,6 +1,6 @@
-# Documentation for project_name {#mainpage}
+# Documentation for Sweepline Intersections {#mainpage}
 
-This is the documentation for project_name.
+This is the documentation for sweepline_intersections.
 
 It is good documentation because:
 

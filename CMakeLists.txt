@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.17)
 
 project(
-  project_name
+  sweepline_intersections
     VERSION 1.0
     LANGUAGES CXX
-    DESCRIPTION "A very nice project"
+    DESCRIPTION "Given n line segments, efficiently find
+      all intersection points in O((n + k) log n)
+      where k is the number of intersections."
 )
 
 # only do these if this is the main project, and not if it is included through add_subdirectory
