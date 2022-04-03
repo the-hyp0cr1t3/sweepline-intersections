@@ -1,0 +1,19 @@
+- change project_name in
+    - name of include/<project_name> dir
+    - all text occurences
+
+- edit docs/mainpage.md
+
+- automate testing with Git Hooks
+    - subl .git/hooks/pre-commit
+```
+#!/usr/bin/sh
+(cd build; ctest --output-on-failure -j6)
+```
+    - chmod +x pre-commit
+    - use `git commit --no-verify` to circumvent
+
+
+References:
+- https://cliutils.gitlab.io/modern-cmake/chapters/basics/structure.html
+- https://gitlab.com/CLIUtils/modern-cmake/-/tree/master/examples/extended-project
