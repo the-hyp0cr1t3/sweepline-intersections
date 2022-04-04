@@ -3,8 +3,7 @@
 #include <iostream>
 #include <constants.hpp>
 
-namespace Sweepline {
-namespace Geometry {
+namespace Sweepline::Geometry {
 
 /**
  * @brief Simple point struct to store the x and y coordinates of point entities
@@ -35,5 +34,4 @@ struct point_t {
  */
 std::ostream &operator << (std::ostream &os, const point_t &p);
 
-} // namespace Geometry
-} // namespace Sweepline
+} // namespace Sweepline::Geometry

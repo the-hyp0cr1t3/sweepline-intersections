@@ -4,8 +4,7 @@
  * @brief Red black tree templated class
  * @date 2022-03-25
  */
-#ifndef __RED_BLACK_TREE_HPP__
-#define __RED_BLACK_TREE_HPP__
+#pragma once
 
 #include <iterator.tpp>
 #include <memory>
@@ -406,5 +405,3 @@ public:
  */
 template <class T, class Compare>
 red_black_tree(T, Compare) -> red_black_tree<T, Compare>;
-
-#endif // __RED_BLACK_TREE_HPP__

@@ -63,6 +63,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(fmtlib)
 # adds fmt::fmt
 
+# generate utils.hpp with path variables substituted in #defines
+configure_file (
+  "${PROJECT_SOURCE_DIR}/include/utils/utils.hpp.in"
+  "${PROJECT_BINARY_DIR}/include/utils/utils.hpp"
+)
+
 # compiled library code is here
 add_subdirectory(src)
 

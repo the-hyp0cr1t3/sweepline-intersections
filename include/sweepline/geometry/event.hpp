@@ -2,8 +2,7 @@
 
 #include <point.hpp>
 
-namespace Sweepline {
-namespace Geometry {
+namespace Sweepline::Geometry {
 
 struct event_t {
     /// The point where the event occurs
@@ -34,5 +33,4 @@ struct event_t {
     std::ostream &operator << (std::ostream &os, const event_t &e);
 #endif
 
-} // namespace Geometry
-} // namespace Sweepline
+} // namespace Sweepline::Geometry

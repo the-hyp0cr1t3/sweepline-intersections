@@ -4,8 +4,7 @@
  * @brief Describes an STL-like raw_iterator template for the rbtree
  * @date 2022-03-25
  */
-#ifndef __ITERATOR_TPP__
-#define __ITERATOR_TPP__
+#pragma once
 
 // template <typename T>
 // concept has_key = requires(T x) { x.key; };      // C++20 only
@@ -184,5 +183,3 @@ protected:
     /// The underlying node pointer
     node_t *m_ptr;
 };
-
-#endif // __ITERATOR_TPP__

@@ -13,11 +13,11 @@
 
 - move LOGFILE to util.shpp
 
-- move utils std::fabs to sweepline/
-
-- change nesting to Sweepline::Geometry
-
-
+- cmdline args
+- verbose instead of ifndef
+- use fmt w/ colours
+- test windows
+- namespace rbtree
 
 
 References:

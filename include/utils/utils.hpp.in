@@ -4,10 +4,9 @@
  * @brief Utility functions
  * @date 2022-03-25
  */
-#ifndef _UTILS_HPP_
-#define _UTILS_HPP_
+#pragma once
 
-#define EXAMPLES_PATH       "data/"
+#define EXAMPLES_PATH "@CMAKE_SOURCE_DIR@/data/"
 
 #include <fstream>
 #include <iostream>
@@ -24,5 +23,3 @@ namespace utils {
 void open_file(std::ifstream &inFile, const std::string &fname);
 
 } // namespace utils
-
-#endif // _UTILS_HPP_
