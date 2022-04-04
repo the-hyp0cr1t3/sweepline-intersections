@@ -4,8 +4,8 @@ project(
   sweepline_intersections
     VERSION 1.0
     LANGUAGES CXX
-    DESCRIPTION "Given n line segments, efficiently find
-      all intersection points in O((n + k) log n)
+    DESCRIPTION "Given n line segments, efficiently find \
+      all intersection points in O((n + k) log n) \
       where k is the number of intersections."
 )
 

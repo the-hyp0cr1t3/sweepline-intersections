@@ -1,7 +1,10 @@
 #include <segment.hpp>
+#include <cmath>
+
+namespace Sweepline::Geometry {
 
 float_t segment_t::eval_y(float_t x) const {
-    return abss(p.x - q.x) < EPS? p.y
+    return std::fabs(p.x - q.x) < EPS? p.y
                 : p.y + (q.y - p.y) * (x - p.x) / (q.x - p.x);
 }
 
@@ -17,7 +20,7 @@ bool can_intersect_1d(float_t l1, float_t r1, float_t l2, float_t r2) {
 
 int cross_prod(const point_t &a, const point_t &b, const point_t &c) {
     float_t s = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
-    return abss(s) < EPS ? 0 : s > 0 ? +1 : -1;
+    return std::fabs(s) < EPS ? 0 : s > 0 ? +1 : -1;
 }
 
 bool is_intersecting(const segment_t &a, const segment_t &b) {
@@ -45,3 +48,5 @@ point_t intersection_point(const segment_t &a, const segment_t &b) {
         return os << "{ " << s.p << ", " << s.q << ", id=" << s.seg_id + 1 << " }";
     }
 #endif
+
+} // namespace Sweepline::Geometry

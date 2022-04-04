@@ -1,1 +1,0 @@
-#include <sweepline_intersections/lib.hpp>

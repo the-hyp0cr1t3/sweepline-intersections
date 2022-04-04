@@ -11,12 +11,15 @@
 #include <iomanip>
 #include <fmt/format.h>
 
-#define OUTPUT_PATH "../output/outfile.txt"
-#define LOGFILE_PATH "../output/logfile.txt"    // only logs in DEBUG mode
+#define OUTPUT_PATH "outfile.txt"
+#define LOGFILE_PATH "logfile.txt"    // only logs in DEBUG mode
 
 #include <utils.hpp>
-#include <intersection.hpp>
+#include <sweepline.hpp>
 
+using Sweepline::Geometry::point_t;
+using Sweepline::Geometry::segment_t;
+using Sweepline::intersection_t;
 
 /**
  * @brief Entry point
@@ -36,7 +39,7 @@ int main(int argc, char *argv[]) {
     // creating input file stream using argv[1] as fname
     std::ifstream fin;
     std::string fname = argv[1];
-    open_file(fin, fname);
+    utils::open_file(fin, fname);
 
     size_t n;       // number of input segments
     fin >> n;
@@ -59,7 +62,7 @@ int main(int argc, char *argv[]) {
     // finding intersections
     std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
 
-    std::vector<intersection_t> result = find_intersections(segments);
+    std::vector<intersection_t> result = Sweepline::find_intersections(segments);
 
     std::chrono::high_resolution_clock::duration total_runtime = std::chrono::high_resolution_clock::now() - start;
 

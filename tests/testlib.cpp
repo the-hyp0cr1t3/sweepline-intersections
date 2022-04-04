@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <sweepline_intersections/lib.hpp>
+#include <sweepline/lib.hpp>
 
 TEST(HelloWorld, Basic){
     const int x = 2;

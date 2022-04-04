@@ -1,10 +1,6 @@
 #include <utils.hpp>
 
-float_t abss(float_t x) {
-    return x < 0? -x : x;
-}
-
-void open_file(std::ifstream &inFile, const std::string &fname) {
+void utils::open_file(std::ifstream &inFile, const std::string &fname) {
     inFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
 
     try {

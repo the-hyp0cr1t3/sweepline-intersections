@@ -1,26 +1,19 @@
-/**
- * @file intersection.hpp
- * @authors the-hyp0cr1t3 JeevanJyot
- * @brief Main logic to find intersections
- * @date 2022-03-25
- */
-#ifndef __INTERSECTION_HPP__
-#define __INTERSECTION_HPP__
+#pragma once
 
 #include <vector>
 #include <utility>
 #include <point.hpp>
 #include <event.hpp>
 #include <segment.hpp>
-#include <intersection.hpp>
-#include <red_black_tree.tpp>
+
+namespace Sweepline {
 
 /**
  * @brief Simple struct to bind together information on an intersection of two or more segments
  */
 struct intersection_t {
     /// The point of intersection of some segments
-    point_t pt;
+    Geometry::point_t pt;
 
     /// A list of segments (their ids) which intersect at this point
     std::vector<size_t> segments;
@@ -41,7 +34,7 @@ struct intersection_t {
  * @param line_segments The list of segments
  * @return std::vector<intersection_t> A list of all intersections
  */
-auto find_intersections(const std::vector<segment_t> &line_segments)
+auto find_intersections(const std::vector<Geometry::segment_t> &line_segments)
     -> std::vector<intersection_t>;
 
 /**
@@ -54,6 +47,8 @@ auto find_intersections(const std::vector<segment_t> &line_segments)
 std::ostream &operator << (std::ostream &os, const intersection_t &s);
 
 
+} // namespace Sweepline
+
 #ifndef NDEBUG
     template <class T>
     std::ostream &operator << (std::ostream &os, const std::vector<T> &v) {
@@ -64,5 +59,3 @@ std::ostream &operator << (std::ostream &os, const intersection_t &s);
         return os << '}';
     }
 #endif
-
-#endif // __INTERSECTION_HPP__

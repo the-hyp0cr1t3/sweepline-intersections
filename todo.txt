@@ -13,7 +13,9 @@
 
 - move LOGFILE to util.shpp
 
+- move utils std::fabs to sweepline/
 
+- change nesting to Sweepline::Geometry
 
 
 

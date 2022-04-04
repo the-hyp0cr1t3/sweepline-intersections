@@ -3,9 +3,15 @@
 #include <vector>
 #include <limits>
 #include <iomanip>
-#include <intersection.hpp>
+#include <cmath>
 
-float_t sweepline_X;
+#include <sweepline.hpp>
+#include <rbtree.tpp>
+
+namespace Sweepline {
+    using namespace Geometry;
+
+float_t Geometry::sweepline_X;
 
 // #include <set>
 // template<typename T>
@@ -36,7 +42,7 @@ std::vector<intersection_t> find_intersections(const std::vector<segment_t> &lin
         const point_t &p = line_segments[i].p;
         const point_t &q = line_segments[i].q;
 
-        if(abss(p.x - q.x) < EPS) {
+        if(std::fabs(p.x - q.x) < EPS) {
             vertical_segs.emplace_back(line_segments[i]);
         } else {
             event_queue.insert({ p, event_t::type::begin, i});
@@ -56,7 +62,7 @@ std::vector<intersection_t> find_intersections(const std::vector<segment_t> &lin
     );
 
     for(size_t i = 0; i + 1 < vertical_segs.size(); i++) {
-        if(abss(vertical_segs[i].q.y - vertical_segs[i + 1].p.y) < EPS) {
+        if(std::fabs(vertical_segs[i].q.y - vertical_segs[i + 1].p.y) < EPS) {
             intersection_t it { vertical_segs[i].q,
                                 std::vector<size_t>{ vertical_segs[i].seg_id, vertical_segs[i + 1].seg_id } };
 #ifndef NDEBUG
@@ -133,8 +139,8 @@ std::vector<intersection_t> find_intersections(const std::vector<segment_t> &lin
         active[top.tp].push_back(top.seg_id);
 
         while(!event_queue.empty()
-                and abss(event_queue.begin()->p.x - top.p.x) < EPS
-                and abss(event_queue.begin()->p.y - top.p.y) < EPS) {
+                and std::fabs(event_queue.begin()->p.x - top.p.x) < EPS
+                and std::fabs(event_queue.begin()->p.y - top.p.y) < EPS) {
 
             event_t nxt_top = *event_queue.begin();
             event_queue.erase(event_queue.begin());
@@ -301,3 +307,5 @@ std::ostream &operator << (std::ostream &os, const intersection_t &s) {
         os << (fst? "" : ", ") << idx + 1, fst = false;
     return os << " }";
 }
+
+} // namespace Sweepline

@@ -1,13 +1,8 @@
-/**
- * @file segment.hpp
- * @author the-hyp0cr1t3
- * @brief Describes the segment_t struct and some operations on it.
- * @date 2022-03-25
- */
-#ifndef __SEGMENT_HPP__
-#define __SEGMENT_HPP__
+#pragma once
 
 #include <point.hpp>
+
+namespace Sweepline::Geometry {
 
 /// A global variable which stores the X coordinate of the vertical sweepline
 extern float_t sweepline_X;
@@ -102,4 +97,4 @@ point_t intersection_point(const segment_t &a, const segment_t &b);
     std::ostream &operator << (std::ostream &os, const segment_t &s);
 #endif
 
-#endif // __SEGMENT_HPP__
+} // namespace Sweepline::Geometry

@@ -1,6 +1,6 @@
 # Documentation for Sweepline Intersections {#mainpage}
 
-This is the documentation for sweepline_intersections.
+This is the documentation for Sweepline Intersections.
 
 It is good documentation because:
 

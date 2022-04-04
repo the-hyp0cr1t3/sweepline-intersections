@@ -396,7 +396,7 @@ public:
 
 // } // namespace impl
 
-#include <red_black_tree_impl.tpp>
+#include <rbtree_impl.tpp>
 
 /**
  * @brief Class template argument deduction for custom compare
