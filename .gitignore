@@ -1,5 +1,6 @@
 Todo.txt
-/build/
-/bin/
-/scripts/run.py
+build*
+bin
+scripts/run.py
 .ipynb_checkpoints
+docs/html

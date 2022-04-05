@@ -1,5 +1,14 @@
 set(DOXYGEN_EXTRACT_ALL YES)
 set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
+set(DOXYGEN_SHOW_NAMESPACES YES)
+set(DOXYGEN_GENERATE_HTML YES)
+set(DOXYGEN_GENERATE_TREEVIEW YES)
+set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/docs")
 
-# doxygen_add_docs(docs sweepline/lib.hpp "${CMAKE_CURRENT_SOURCE_DIR}/mainpage.md"
-#                  WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/include")
+doxygen_add_docs(docs
+  "${CMAKE_SOURCE_DIR}/app/app.cpp"
+  "${CMAKE_SOURCE_DIR}/include"
+  "${CMAKE_CURRENT_SOURCE_DIR}/mainpage.md"
+  WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/include"
+  COMMENT "Generate HTML documentation"
+)
