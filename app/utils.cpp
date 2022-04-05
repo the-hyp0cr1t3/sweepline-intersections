@@ -20,7 +20,7 @@ namespace detail {
   buffer_restorer r_cerr(std::cerr, std::cerr.rdbuf());
   buffer_restorer r_cout(std::cout, std::cout.rdbuf());
 
-}
+} // namespace detail
 
 void utils::open_file(std::ifstream &inFile, const std::string &fname) {
     inFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);

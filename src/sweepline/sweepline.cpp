@@ -76,7 +76,7 @@ namespace Sweepline {
       return res;
     }
 
-  }
+  } // namespace detail
 
   Geometry::float_t Geometry::sweepline_X;
 

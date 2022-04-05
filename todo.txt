@@ -11,6 +11,7 @@
 
 
 - add_subdirectory(tests)
+- add data/
 - document code
 - add_subdirectory(docs)
 - run.py
