@@ -6,20 +6,30 @@
  */
 #pragma once
 
-#define EXAMPLES_PATH "@CMAKE_SOURCE_DIR@/data/"
-
 #include <fstream>
 #include <iostream>
 
+#define DATA_PATH "@CMAKE_SOURCE_DIR@/data/"
+
+#define format_col(enable_color, ts, argn...) \
+  fmt::format((enable_color? ts : fmt::v8::text_style()), argn)
+
 namespace utils {
 
-/**
- * @brief Safely opens a file, otherwise throws an exception
- *
- * @param inFile A reference to an ifstream object to open the file with
- * @param fname The path to the file
- * @note fname must either be an absolute path or a path relative to examples/ dir
- */
-void open_file(std::ifstream &inFile, const std::string &fname);
+  /**
+   * @brief Safely opens a file, otherwise throws an exception
+   *
+   * @param inFile A reference to an ifstream object to open the file with
+   * @param fname The path to the file
+   * @note fname must either be an absolute path or a path relative to examples/ dir
+   */
+  void open_file(std::ifstream &inFile, const std::string &fname);
+
+  struct args {
+    std::string inputf, outputf, logf;
+    bool verbose, enable_color;
+  };
+
+  args parse_args_and_redirect_streams(int argc, char *argv[]);
 
 } // namespace utils

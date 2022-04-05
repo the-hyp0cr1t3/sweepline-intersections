@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 
 project(
   sweepline_intersections
-    VERSION 1.0
+    VERSION 2.0
     LANGUAGES CXX
     DESCRIPTION "Given n line segments, efficiently find \
       all intersection points in O((n + k) log n) \

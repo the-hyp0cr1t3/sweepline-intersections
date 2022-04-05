@@ -8,4 +8,4 @@ target_include_directories(sweepline PUBLIC
   "${CMAKE_SOURCE_DIR}/include/sweepline"
 )
 
-target_link_libraries(sweepline PUBLIC geometry PRIVATE rbtree)
+target_link_libraries(sweepline PUBLIC geometry PRIVATE rbtree fmt::fmt)

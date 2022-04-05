@@ -11,11 +11,6 @@
 
 
 
-- move LOGFILE to util.shpp
-
-- cmdline args
-- verbose instead of ifndef
-- use fmt w/ colours
 - test windows
 - namespace rbtree
 
