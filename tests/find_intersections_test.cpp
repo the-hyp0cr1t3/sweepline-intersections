@@ -103,8 +103,8 @@ protected:
 };
 
 TEST_F(EdgeCases, AnotherNestedY){
-    auto segments = input("another_nested_y.txt");
-    auto expected = expected_output("expected/another_nested_y.txt");
+    auto segments = input("edge_case_another_nested_y.txt");
+    auto expected = expected_output("expected/edge_case_another_nested_y.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -117,8 +117,8 @@ TEST_F(EdgeCases, AnotherNestedY){
 }
 
 TEST_F(EdgeCases, GridLinesWithSingleOblique){
-    auto segments = input("grid_lines_with_single_oblique.txt");
-    auto expected = expected_output("expected/grid_lines_with_single_oblique.txt");
+    auto segments = input("edge_case_grid_lines_with_single_oblique.txt");
+    auto expected = expected_output("expected/edge_case_grid_lines_with_single_oblique.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -129,8 +129,8 @@ TEST_F(EdgeCases, GridLinesWithSingleOblique){
 }
 
 TEST_F(EdgeCases, OriginIntersect3){
-    auto segments = input("origin_intersect_3.txt");
-    auto expected = expected_output("expected/origin_intersect_3.txt");
+    auto segments = input("edge_case_origin_intersect_3.txt");
+    auto expected = expected_output("expected/edge_case_origin_intersect_3.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -141,8 +141,8 @@ TEST_F(EdgeCases, OriginIntersect3){
 }
 
 TEST_F(EdgeCases, Butterfly){
-    auto segments = input("butterfly.txt");
-    auto expected = expected_output("expected/butterfly.txt");
+    auto segments = input("edge_case_butterfly.txt");
+    auto expected = expected_output("expected/edge_case_butterfly.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -153,8 +153,8 @@ TEST_F(EdgeCases, Butterfly){
 }
 
 TEST_F(EdgeCases, HorizontalObliqueCross){
-    auto segments = input("horizontal_oblique_cross.txt");
-    auto expected = expected_output("expected/horizontal_oblique_cross.txt");
+    auto segments = input("edge_case_horizontal_oblique_cross.txt");
+    auto expected = expected_output("expected/edge_case_horizontal_oblique_cross.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -165,8 +165,8 @@ TEST_F(EdgeCases, HorizontalObliqueCross){
 }
 
 TEST_F(EdgeCases, ParallelsIntersectOblique){
-    auto segments = input("parallels_intersect_oblique.txt");
-    auto expected = expected_output("expected/parallels_intersect_oblique.txt");
+    auto segments = input("edge_case_parallels_intersect_oblique.txt");
+    auto expected = expected_output("expected/edge_case_parallels_intersect_oblique.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -177,8 +177,8 @@ TEST_F(EdgeCases, ParallelsIntersectOblique){
 }
 
 TEST_F(EdgeCases, CloseParallelLines){
-    auto segments = input("close_parallel_lines.txt");
-    auto expected = expected_output("expected/close_parallel_lines.txt");
+    auto segments = input("edge_case_close_parallel_lines.txt");
+    auto expected = expected_output("expected/edge_case_close_parallel_lines.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -189,8 +189,8 @@ TEST_F(EdgeCases, CloseParallelLines){
 }
 
 TEST_F(EdgeCases, HorizontalParallel){
-    auto segments = input("horizontal_parallel.txt");
-    auto expected = expected_output("expected/horizontal_parallel.txt");
+    auto segments = input("edge_case_horizontal_parallel.txt");
+    auto expected = expected_output("expected/edge_case_horizontal_parallel.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -201,8 +201,8 @@ TEST_F(EdgeCases, HorizontalParallel){
 }
 
 TEST_F(EdgeCases, Star){
-    auto segments = input("star.txt");
-    auto expected = expected_output("expected/star.txt");
+    auto segments = input("edge_case_star.txt");
+    auto expected = expected_output("expected/edge_case_star.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -213,8 +213,8 @@ TEST_F(EdgeCases, Star){
 }
 
 TEST_F(EdgeCases, CoordinateAxes1){
-    auto segments = input("coordinate_axes_1.txt");
-    auto expected = expected_output("expected/coordinate_axes_1.txt");
+    auto segments = input("edge_case_coordinate_axes_1.txt");
+    auto expected = expected_output("expected/edge_case_coordinate_axes_1.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -225,8 +225,8 @@ TEST_F(EdgeCases, CoordinateAxes1){
 }
 
 TEST_F(EdgeCases, NarrowingDownwards){
-    auto segments = input("narrowing_downwards.txt");
-    auto expected = expected_output("expected/narrowing_downwards.txt");
+    auto segments = input("edge_case_narrowing_downwards.txt");
+    auto expected = expected_output("expected/edge_case_narrowing_downwards.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -237,8 +237,8 @@ TEST_F(EdgeCases, NarrowingDownwards){
 }
 
 TEST_F(EdgeCases, TriangleInTriangle){
-    auto segments = input("triangle_in_triangle.txt");
-    auto expected = expected_output("expected/triangle_in_triangle.txt");
+    auto segments = input("edge_case_triangle_in_triangle.txt");
+    auto expected = expected_output("expected/edge_case_triangle_in_triangle.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -249,8 +249,8 @@ TEST_F(EdgeCases, TriangleInTriangle){
 }
 
 TEST_F(EdgeCases, CoordinateAxes2){
-    auto segments = input("coordinate_axes_2.txt");
-    auto expected = expected_output("expected/coordinate_axes_2.txt");
+    auto segments = input("edge_case_coordinate_axes_2.txt");
+    auto expected = expected_output("expected/edge_case_coordinate_axes_2.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -261,8 +261,8 @@ TEST_F(EdgeCases, CoordinateAxes2){
 }
 
 TEST_F(EdgeCases, NestedY){
-    auto segments = input("nested_y.txt");
-    auto expected = expected_output("expected/nested_y.txt");
+    auto segments = input("edge_case_nested_y.txt");
+    auto expected = expected_output("expected/edge_case_nested_y.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -273,8 +273,8 @@ TEST_F(EdgeCases, NestedY){
 }
 
 TEST_F(EdgeCases, VerticalObliqueCross){
-    auto segments = input("vertical_oblique_cross.txt");
-    auto expected = expected_output("expected/vertical_oblique_cross.txt");
+    auto segments = input("edge_case_vertical_oblique_cross.txt");
+    auto expected = expected_output("expected/edge_case_vertical_oblique_cross.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -285,8 +285,8 @@ TEST_F(EdgeCases, VerticalObliqueCross){
 }
 
 TEST_F(EdgeCases, CoordinateAxes3){
-    auto segments = input("coordinate_axes_3.txt");
-    auto expected = expected_output("expected/coordinate_axes_3.txt");
+    auto segments = input("edge_case_coordinate_axes_3.txt");
+    auto expected = expected_output("expected/edge_case_coordinate_axes_3.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -297,8 +297,8 @@ TEST_F(EdgeCases, CoordinateAxes3){
 }
 
 TEST_F(EdgeCases, NotIntersectingButClose){
-    auto segments = input("not_intersecting_but_close.txt");
-    auto expected = expected_output("expected/not_intersecting_but_close.txt");
+    auto segments = input("edge_case_not_intersecting_but_close.txt");
+    auto expected = expected_output("expected/edge_case_not_intersecting_but_close.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -309,8 +309,8 @@ TEST_F(EdgeCases, NotIntersectingButClose){
 }
 
 TEST_F(EdgeCases, VerticalParallel){
-    auto segments = input("vertical_parallel.txt");
-    auto expected = expected_output("expected/vertical_parallel.txt");
+    auto segments = input("edge_case_vertical_parallel.txt");
+    auto expected = expected_output("expected/edge_case_vertical_parallel.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -321,8 +321,8 @@ TEST_F(EdgeCases, VerticalParallel){
 }
 
 TEST_F(EdgeCases, DisappointedFace){
-    auto segments = input("disappointed_face.txt");
-    auto expected = expected_output("expected/disappointed_face.txt");
+    auto segments = input("edge_case_disappointed_face.txt");
+    auto expected = expected_output("expected/edge_case_disappointed_face.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -333,8 +333,8 @@ TEST_F(EdgeCases, DisappointedFace){
 }
 
 TEST_F(EdgeCases, OriginIntersect1){
-    auto segments = input("origin_intersect_1.txt");
-    auto expected = expected_output("expected/origin_intersect_1.txt");
+    auto segments = input("edge_case_origin_intersect_1.txt");
+    auto expected = expected_output("expected/edge_case_origin_intersect_1.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());
@@ -345,8 +345,8 @@ TEST_F(EdgeCases, OriginIntersect1){
 }
 
 TEST_F(EdgeCases, OriginIntersect2){
-    auto segments = input("origin_intersect_2.txt");
-    auto expected = expected_output("expected/origin_intersect_2.txt");
+    auto segments = input("edge_case_origin_intersect_2.txt");
+    auto expected = expected_output("expected/edge_case_origin_intersect_2.txt");
     auto received = normalize(Sweepline::find_intersections(segments));
 
     EXPECT_EQ(received.size(), expected.size());

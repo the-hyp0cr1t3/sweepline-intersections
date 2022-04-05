@@ -69,6 +69,11 @@ configure_file (
   "${PROJECT_BINARY_DIR}/include/utils/utils.hpp"
 )
 
+configure_file (
+  "${PROJECT_SOURCE_DIR}/scripts/run.py.in"
+  "${PROJECT_SOURCE_DIR}/scripts/run.py"
+)
+
 # compiled library code is here
 add_subdirectory(src)
 

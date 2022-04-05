@@ -39,15 +39,18 @@ std::vector<segment_t> input() {
 
 void output(const std::vector<intersection_t> &result, bool enable_color) {
     std::cout << fmt::format("  {}\n", result.size());
+    // std::cout << fmt::format("{}\n", result.size());
     for(auto it: result) {
         std::cout << format_col(enable_color,
             fmt::emphasis::faint | fg(fmt::color::medium_aquamarine),
             "  ({:.3f}, {:.3f})  ", it.pt.x, it.pt.y
+            // "{:.10f} {:.10f} ", it.pt.x, it.pt.y
         );
 
         bool fst = true;
         for(int idx: it.segments) {
             std::cout << (fst? "" : ", ")
+            // std::cout << (fst? "" : " ")
                 << format_col(enable_color,
                         fmt::emphasis::faint | fg(fmt::color::khaki), "{}", idx + 1);
             fst = false;

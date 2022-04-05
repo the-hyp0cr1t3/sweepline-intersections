@@ -1,2 +1,4 @@
 /build/
 /bin/
+/scripts/run.py
+.ipynb_checkpoints

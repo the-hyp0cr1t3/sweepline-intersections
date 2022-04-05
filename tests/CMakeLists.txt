@@ -25,7 +25,7 @@ endmacro()
 
 
 # register a test linked with google test
-add_gtest_macro(find_intersections find_intersections_test.cpp sweepline "${CMAKE_SOURCE_DIR}/data/edge_cases")
+add_gtest_macro(find_intersections find_intersections_test.cpp sweepline "${CMAKE_SOURCE_DIR}/data")
 
 
 # register a test to check behaviour of app on no commandline args
