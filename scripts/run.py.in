@@ -15,7 +15,7 @@ plt.rcParams["axes.edgecolor"] = "black"
 plt.rcParams["axes.linewidth"] = 2.50
  
 OUT_PATH = "@CMAKE_BINARY_DIR@/run_output.txt"
-EXEC_CMD = ["@CMAKE_SOURCE_DIR@/bin/app", "-nc", "-o" , OUT_PATH, "-i"]
+EXEC_CMD = [ "@CMAKE_SOURCE_DIR@/bin/app", "-nc", "-o" , OUT_PATH, "-i" ]
  
 def getData(segmentPath):
     # Reads the line segments from segmentPath and intersection points from OUT_PATH
