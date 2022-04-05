@@ -1,4 +1,4 @@
-#include <segment.hpp>
+#include <sweepline/geometry/segment.hpp>
 #include <cmath>
 
 using SGfloat_t = Sweepline::Geometry::float_t;

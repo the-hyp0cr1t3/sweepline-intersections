@@ -25,11 +25,11 @@ endmacro()
 
 
 # register a test linked with google test
-add_gtest_macro(simpletest testlib.cpp mylib "${PROJECT_SOURCE_DIR}/data/")
+add_gtest_macro(find_intersections find_intersections_test.cpp sweepline "${CMAKE_SOURCE_DIR}/data/edge_cases")
 
 
 # register a test to check behaviour of app on no commandline args
-add_test(NAME NoArgs COMMAND app)
-set_tests_properties(NoArgs
-  PROPERTIES PASS_REGULAR_EXPRESSION "^Invalid usage"
-)
+# add_test(NAME NoArgs COMMAND app)
+# set_tests_properties(NoArgs
+#   PROPERTIES PASS_REGULAR_EXPRESSION "^Invalid usage"
+# )

@@ -1,4 +1,4 @@
-#include <point.hpp>
+#include <sweepline/geometry/point.hpp>
 #include <cmath>
 
 bool Sweepline::Geometry::point_t::operator == (const point_t &other) const {

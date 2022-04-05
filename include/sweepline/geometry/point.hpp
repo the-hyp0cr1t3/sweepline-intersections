@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <constants.hpp>
+#include <sweepline/geometry/constants.hpp>
 
 namespace Sweepline::Geometry {
 

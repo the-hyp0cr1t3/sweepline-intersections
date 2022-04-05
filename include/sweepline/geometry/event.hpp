@@ -1,5 +1,5 @@
 #pragma once
-#include <point.hpp>
+#include <sweepline/geometry/point.hpp>
 
 namespace Sweepline::Geometry {
 

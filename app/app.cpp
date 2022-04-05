@@ -11,7 +11,7 @@
 #include <fmt/color.h>
 
 #include <utils.hpp>
-#include <sweepline.hpp>
+#include <sweepline/sweepline.hpp>
 
 using Sweepline::Geometry::point_t;
 using Sweepline::Geometry::segment_t;

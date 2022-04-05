@@ -2,9 +2,9 @@
 
 #include <vector>
 #include <utility>
-#include <point.hpp>
-#include <event.hpp>
-#include <segment.hpp>
+#include <sweepline/geometry/point.hpp>
+#include <sweepline/geometry/event.hpp>
+#include <sweepline/geometry/segment.hpp>
 
 namespace Sweepline {
 

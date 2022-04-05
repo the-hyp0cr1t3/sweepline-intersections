@@ -7,7 +7,7 @@
 #include <fmt/format.h>
 #include <fmt/color.h>
 
-#include <sweepline.hpp>
+#include <sweepline/sweepline.hpp>
 #include <rbtree.tpp>
 
 #define format_col(enable_color, ts, argn...) \

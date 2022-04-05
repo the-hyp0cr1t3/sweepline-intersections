@@ -10,13 +10,12 @@
     - use `git commit --no-verify` to circumvent
 
 
-- add_subdirectory(tests)
 - add data/
 - document code
 - add_subdirectory(docs)
 - run.py
-- README
 - report
+- README
 - test windows
 - namespace rbtree
 

@@ -9,7 +9,6 @@ add_library(geometry STATIC
   "${CMAKE_SOURCE_DIR}/include/sweepline/geometry/segment.hpp"
 )
 
-# PUBLIC because users of our library will need it too
-target_include_directories(geometry PUBLIC
-  "${CMAKE_SOURCE_DIR}/include/sweepline/geometry"
+target_include_directories(geometry PRIVATE
+  "${CMAKE_SOURCE_DIR}/include"
 )

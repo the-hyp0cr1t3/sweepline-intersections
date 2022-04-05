@@ -1,4 +1,4 @@
-#include <event.hpp>
+#include <sweepline/geometry/event.hpp>
 #include <cmath>
 
 bool Sweepline::Geometry::event_t::operator < (const event_t &e) const {

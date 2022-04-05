@@ -104,7 +104,7 @@ utils::args utils::parse_args_and_redirect_streams(int argc, char *argv[]) {
         detail::ferr.open(*p, std::ios::trunc);
         std::cerr.rdbuf(detail::ferr.rdbuf());
     } else if(params.verbose) {
-        fmt::print("> {} stream specified:    {} (file)\n",
+        fmt::print("> {} stream specified:    {}\n",
             format_col(params.enable_color, fg(fmt::color::gold), "log"),
             format_col(params.enable_color, fg(fmt::color::yellow_green), "stderr"));
     }
@@ -118,7 +118,7 @@ utils::args utils::parse_args_and_redirect_streams(int argc, char *argv[]) {
         detail::fout.open(*p, std::ios::trunc);
         std::cout.rdbuf(detail::fout.rdbuf());
     } else {
-        fmt::print("> {} stream specified: {} (file)\n",
+        fmt::print("> {} stream specified: {}\n",
             format_col(params.enable_color, fg(fmt::color::gold), "output"),
             format_col(params.enable_color, fg(fmt::color::yellow_green), "stdout"));
     }
