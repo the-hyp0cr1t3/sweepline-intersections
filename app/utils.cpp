@@ -22,7 +22,7 @@ namespace detail {
 
 } // namespace detail
 
-void utils::open_file(std::ifstream &inFile, const std::string &fname) {
+void Utils::open_file(std::ifstream &inFile, const std::string &fname) {
     inFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
 
     try {
@@ -42,7 +42,7 @@ void utils::open_file(std::ifstream &inFile, const std::string &fname) {
     inFile.exceptions(std::ifstream::badbit);
 }
 
-utils::args utils::parse_args_and_redirect_streams(int argc, char *argv[]) {
+Utils::args Utils::parse_args_and_redirect_streams(int argc, char *argv[]) {
     argparse::ArgumentParser program("./app", "2.0");
 
     program.add_argument("-i", "--inputf")
@@ -54,7 +54,7 @@ utils::args utils::parse_args_and_redirect_streams(int argc, char *argv[]) {
     program.add_argument("-l", "--logf")
       .help("specify the log file");
 
-    program.add_argument("-v", "--verbose")
+    program.add_argument("-V", "--verbose")
       .default_value(false)
       .implicit_value(true)
       .help("write useful debug statements that describe the state at every stage");
@@ -87,7 +87,7 @@ utils::args utils::parse_args_and_redirect_streams(int argc, char *argv[]) {
             format_col(params.enable_color, fg(fmt::color::yellow_green), "{}", *p));
 
         params.inputf = *p;
-        utils::open_file(detail::fin, *p);
+        Utils::open_file(detail::fin, *p);
         std::cin.rdbuf(detail::fin.rdbuf());
     } else {
         fmt::print("> {} stream specified:  {}\n",

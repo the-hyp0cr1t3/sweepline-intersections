@@ -1,7 +1,7 @@
 /**
  * @file main.cpp
  * @author the-hyp0cr1t3
- * @brief Main source file
+ * @brief Main app file
  * @date 2022-03-25
  */
 #include <iostream>
@@ -17,6 +17,17 @@ using Sweepline::Geometry::point_t;
 using Sweepline::Geometry::segment_t;
 using Sweepline::intersection_t;
 
+/**
+ * @brief Gathers input from stdin or a file and returns a vector of segments
+ *
+ * Input must be a description of \f$ n \f$ line segments in the following format.
+ * The first line must contain a single integer \f$ n \f$ — the number of line segments.
+ * Each of the next \f$ n \f$ lines must contain four real numbers \f$ p_x \f$, \f$ p_y \f$, \f$ q_x \f$, \f$ q_y \f$
+ * — the coordinates of the endpoints \f$ p \f$ and \f$ q \f$ of the corresponding line segment.
+ *
+ * @pre `std::cin` must be redirected to appropriate file stream before function call
+ * @return `std::vector<segment_t>` A vector of segments from the input
+ */
 std::vector<segment_t> input() {
     size_t n;       // number of input segments
     std::cin >> n;
@@ -37,6 +48,21 @@ std::vector<segment_t> input() {
     return segments;
 }
 
+/**
+ * @brief Prints a vector of intersections to stdout or a file
+ *
+ * The format of output is as follows.
+ * The first line will contain a single integer \f$ m \f$ — the number of intersections.
+ * Each of the next \f$ m \f$ lines will contain two real numbers \f$ x \f$ and \f$ y \f$,
+ * folllowed by two or more integers
+ * — the coordinates of the corresponding intersection point
+ * and the indices (1-based) of the segments in the input that intersect at this point.
+ *
+ * @pre `std::cout` must be redirected to appropriate file stream before function call
+ *
+ * @param result A vector of intersection points to print
+ * @param enable_color Commandline boolean flag which enables or disables printing in color
+ */
 void output(const std::vector<intersection_t> &result, bool enable_color) {
     std::cout << fmt::format("  {}\n", result.size());
     // std::cout << fmt::format("{}\n", result.size());
@@ -65,6 +91,20 @@ void output(const std::vector<intersection_t> &result, bool enable_color) {
 /**
  * @brief Entry point
  *
+ * **Usage** `./app [options]`
+ *
+ * **Example** `./app --verbose -i sample_test.txt -nc --outputf ~/outfile.txt`
+ *
+ * Flag             |                 Description                                                           |
+ * :--------------: | :------------------------------------------------------------------------------------ |
+ * `-h --help`     	| shows help message and exits [default: false]                                         |
+ * `-v --version`  	| prints version information and exits [default: false]                                 |
+ * `-i --inputf`   	| specify the input file                                                                |
+ * `-o --outputf`  	| specify the output file                                                               |
+ * `-l --logf`     	| specify the log file                                                                  |
+ * `-V --verbose`  	| write useful debug statements that describe the state at every stage [default: false] |
+ * `-nc --nocolor` 	| disable color printing [default: false]                                               |
+ *
  * @param argc The number of commandline arguments
  * @param argv A list of commandline arguments
  * @return nothing
@@ -72,7 +112,7 @@ void output(const std::vector<intersection_t> &result, bool enable_color) {
 int main(int argc, char *argv[]) {
 
     // parsing command line arguments and redirecting input/output streams to specified files
-    auto params = utils::parse_args_and_redirect_streams(argc, argv);
+    auto params = Utils::parse_args_and_redirect_streams(argc, argv);
 
     // reading input
     std::vector<segment_t> segments = input();

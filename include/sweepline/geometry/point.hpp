@@ -1,5 +1,10 @@
+/**
+ * @file point.hpp
+ * @author the-hyp0cr1t3
+ * @brief Describes the point_t struct
+ * @date 2022-03-25
+ */
 #pragma once
-
 #include <iostream>
 #include <sweepline/geometry/constants.hpp>
 
@@ -16,11 +21,13 @@ namespace Sweepline::Geometry {
     float_t y;
 
     /**
-     * @brief == operator overload for point_t
+     * @brief Overloading the == operator for point_t
+     *
+     * All floating point comparisons are done within a neighbourhood of `Sweepline::Geometry::EPS`.
      *
      * @param other The other point this is being compared to
-     * @return true if the x and y coordinates match with error < EPS
-     * @return false otherwise
+     * @return `true` if both the x and y coordinates match with max permissible error EPS
+     * @return `false` otherwise
      */
     bool operator == (const point_t &other) const;
   };
@@ -32,6 +39,6 @@ namespace Sweepline::Geometry {
    * @param p The point to be written
    * @return std::ostream& A reference to the output stream after writing to it
    */
-  std::ostream &operator << (std::ostream &os, const point_t &p);
+  // std::ostream &operator << (std::ostream &os, const point_t &p);
 
 } // namespace Sweepline::Geometry

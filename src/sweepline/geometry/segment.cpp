@@ -46,6 +46,6 @@ Sweepline::Geometry::point_t Sweepline::Geometry::intersection_point(const segme
     return point_t {(B1 * C2 - B2 * C1) / (A1 * B2 - A2 * B1), (C1 * A2 - C2 * A1) / (A1 * B2 - A2 * B1)};
 }
 
-std::ostream &Sweepline::Geometry::operator << (std::ostream &os, const Sweepline::Geometry::segment_t &s) {
-    return os << "{ " << s.p << ", " << s.q << ", id=" << s.seg_id + 1 << " }";
-}
+// std::ostream &Sweepline::Geometry::operator << (std::ostream &os, const Sweepline::Geometry::segment_t &s) {
+//     return os << "{ " << s.p << ", " << s.q << ", id=" << s.seg_id + 1 << " }";
+// }

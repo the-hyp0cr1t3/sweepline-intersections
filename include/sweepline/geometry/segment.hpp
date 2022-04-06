@@ -92,6 +92,6 @@ namespace Sweepline::Geometry {
    */
   point_t intersection_point(const segment_t &a, const segment_t &b);
 
-  std::ostream &operator << (std::ostream &os, const Sweepline::Geometry::segment_t &s);
+  // std::ostream &operator << (std::ostream &os, const Sweepline::Geometry::segment_t &s);
 
 } // namespace Sweepline::Geometry

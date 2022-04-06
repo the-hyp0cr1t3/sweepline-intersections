@@ -1,5 +1,5 @@
 /**
- * @file utils.hpp
+ * @file utils.hpp.in
  * @author the-hyp0cr1t3
  * @brief Utility functions
  * @date 2022-03-25
@@ -9,27 +9,54 @@
 #include <fstream>
 #include <iostream>
 
+/// Absolute path to ./data, substituted in by cmake during confiure phase
 #define DATA_PATH "@CMAKE_SOURCE_DIR@/data/"
 
+/// Macro which calls fmt::print with or without color options based on boolean flag `enable_color`
 #define format_col(enable_color, ts, argn...) \
   fmt::format((enable_color? ts : fmt::v8::text_style()), argn)
 
-namespace utils {
+/**
+ * @namespace Utils
+ */
+namespace Utils {
 
   /**
    * @brief Safely opens a file, otherwise throws an exception
    *
    * @param inFile A reference to an ifstream object to open the file with
    * @param fname The path to the file
-   * @note fname must either be an absolute path or a path relative to examples/ dir
+   * @note fname must either be an absolute path or a path relative to ./data dir
    */
   void open_file(std::ifstream &inFile, const std::string &fname);
 
+  /**
+   * @brief Packs all the commandline parameters together to return to main.cpp
+   */
   struct args {
-    std::string inputf, outputf, logf;
-    bool verbose, enable_color;
+    std::string inputf;   ///< Path to the input file
+    std::string outputf;  ///< Path to the output file
+    std::string logf;     ///< Path to the log file
+    bool verbose;         ///< If true, write useful debug statements to log file that describe the state of the program at every stage [default: false]
+    bool enable_color;    ///< If true, enable color printing [default: true]
   };
 
+  /**
+   * @brief Parses the commandline arguments and flags. Redirects input/output streams accordingly.
+   *
+   * Uses an external library <a href="https://github.com/p-ranav/argparse">argparse</a>
+   * to parse commandline args.
+   *
+   * @see `::main()` for list of commandline flags
+   *
+   * * If `-i` or `--inputf` is specified, redirects `std::cin` to corresponding file specified after the flag.
+   * * If `-o` or `--outputf` is specified, redirects `std::cout` to corresponding file specified after the flag.
+   * * If `-l` or `--logf` is specified, redirects `std::cerr` to corresponding file specified after the flag.
+   *
+   * @param argc The number of commandline arguments
+   * @param argv A list of commandline arguments
+   * @return `args` A struct containing all the required information on the parsed arguments
+   */
   args parse_args_and_redirect_streams(int argc, char *argv[]);
 
-} // namespace utils
+} // namespace Utils

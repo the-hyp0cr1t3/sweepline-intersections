@@ -9,10 +9,3 @@ bool Sweepline::Geometry::event_t::operator < (const event_t &e) const {
     else
         return seg_id < e.seg_id;
 }
-
-
-std::ostream &Sweepline::Geometry::operator << (std::ostream &os, const event_t &e) {
-    return os << "<(" << e.p.x << ", " << e.p.y << "), "
-            << (e.tp == event_t::type::begin? "begin"
-                : e.tp == event_t::type::interior? "interior" : "end") << ", id=" << e.seg_id + 1 << '>';
-}
