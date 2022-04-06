@@ -3,168 +3,191 @@
 #include <iostream>
 #include <algorithm>
 
-// namespace impl {
+namespace RBtree
+{
 
-template <class T, class Compare>
-node_impl<T> *red_black_tree<T, Compare>::create_node(const T &key) {
-    return new node(key);   // memory leak incoming...
-}
-
-template <class T>
-node_impl<T> *node_impl<T>::prev(node_impl<T> *it) {
-
-    if(it == sentinel_ptr)
-        throw std::runtime_error("Attempt to decrement nullptrrr");
-
-    if(it->l != sentinel_ptr) {
-        it = it->l;
-
-        while(it->r != sentinel_ptr)
-            it = it->r;
-
-    } else {
-
-        while(it->p != sentinel_ptr and it == it->p->l)
-            it = it->p;
-
-        it = it->p;
+    template <class T, class Compare>
+    node_impl<T> *red_black_tree<T, Compare>::create_node(const T &key)
+    {
+        return new node(key); // memory leak incoming...
     }
 
-    return it;
-}
+    template <class T>
+    node_impl<T> *node_impl<T>::prev(node_impl<T> *it)
+    {
 
-template <class T>
-node_impl<T> *node_impl<T>::next(node_impl<T> *it) {
+        if (it == sentinel_ptr)
+            throw std::runtime_error("Attempt to decrement nullptrrr");
 
-    if(it == sentinel_ptr)
-        throw std::runtime_error("Attempt to increment nullptrrr");
-
-    if(it->r != sentinel_ptr) {
-        it = it->r;
-
-        while(it->l != sentinel_ptr)
+        if (it->l != sentinel_ptr)
+        {
             it = it->l;
 
-    } else {
+            while (it->r != sentinel_ptr)
+                it = it->r;
+        }
+        else
+        {
 
-        while(it->p != sentinel_ptr and it == it->p->r)
+            while (it->p != sentinel_ptr and it == it->p->l)
+                it = it->p;
+
             it = it->p;
+        }
 
-        it = it->p;
+        return it;
     }
 
-    return it;
-}
+    template <class T>
+    node_impl<T> *node_impl<T>::next(node_impl<T> *it)
+    {
 
-template <class T, class Compare>
-void red_black_tree<T, Compare>::transplant(node *x, node *y) {
-    if(x->p == sentinel_ptr)
-        root = y;
-    else if(x == x->p->l)
-        x->p->l = y;
-    else
-        x->p->r = y;
-    y->p = x->p;
-}
+        if (it == sentinel_ptr)
+            throw std::runtime_error("Attempt to increment nullptrrr");
 
-template <class T, class Compare>
-void red_black_tree<T, Compare>::left_rotate(node *x) {
-    node *y = x->r;
-    x->r = y->l;
-    if(y->l != sentinel_ptr)
-        y->l->p = x;
+        if (it->r != sentinel_ptr)
+        {
+            it = it->r;
 
-    y->p = x->p;
-    if(y->p == sentinel_ptr)
-        root = y;
-    else if(x == x->p->l)
-        x->p->l = y;
-    else
-        x->p->r = y;
+            while (it->l != sentinel_ptr)
+                it = it->l;
+        }
+        else
+        {
 
-    y->l = x;
-    x->p = y;
-}
+            while (it->p != sentinel_ptr and it == it->p->r)
+                it = it->p;
 
-template <class T, class Compare>
-void red_black_tree<T, Compare>::right_rotate(node *y) {
-    node *x = y->l;
-    y->l = x->r;
-    if(x->r != sentinel_ptr)
-        x->r->p = y;
+            it = it->p;
+        }
 
-    x->p = y->p;
-    if(y->p == sentinel_ptr)
-        root = x;
-    else if(y == y->p->l)
-        y->p->l = x;
-    else
-        y->p->r = x;
+        return it;
+    }
 
-    x->r = y;
-    y->p = x;
-}
+    template <class T, class Compare>
+    void red_black_tree<T, Compare>::transplant(node *x, node *y)
+    {
+        if (x->p == sentinel_ptr)
+            root = y;
+        else if (x == x->p->l)
+            x->p->l = y;
+        else
+            x->p->r = y;
+        y->p = x->p;
+    }
 
-template <class T, class Compare>
-void red_black_tree<T, Compare>::fix_insert(node *z) {
-    while(z->p->col == RED) {
+    template <class T, class Compare>
+    void red_black_tree<T, Compare>::left_rotate(node *x)
+    {
+        node *y = x->r;
+        x->r = y->l;
+        if (y->l != sentinel_ptr)
+            y->l->p = x;
 
-        if(z->p == z->p->p->l) {
-            node *y = z->p->p->r;
+        y->p = x->p;
+        if (y->p == sentinel_ptr)
+            root = y;
+        else if (x == x->p->l)
+            x->p->l = y;
+        else
+            x->p->r = y;
 
-            if(y->col == RED) {
-                z->p->col = y->col = BLACK;
-                z->p->p->col = RED;
-                z = z->p->p;
+        y->l = x;
+        x->p = y;
+    }
 
-            } else {
-                if(z == z->p->r)
-                    left_rotate(z = z->p);
+    template <class T, class Compare>
+    void red_black_tree<T, Compare>::right_rotate(node *y)
+    {
+        node *x = y->l;
+        y->l = x->r;
+        if (x->r != sentinel_ptr)
+            x->r->p = y;
 
-                z->p->col = BLACK;
-                z->p->p->col = RED;
-                right_rotate(z->p->p);
+        x->p = y->p;
+        if (y->p == sentinel_ptr)
+            root = x;
+        else if (y == y->p->l)
+            y->p->l = x;
+        else
+            y->p->r = x;
+
+        x->r = y;
+        y->p = x;
+    }
+
+    template <class T, class Compare>
+    void red_black_tree<T, Compare>::fix_insert(node *z)
+    {
+        while (z->p->col == RED)
+        {
+
+            if (z->p == z->p->p->l)
+            {
+                node *y = z->p->p->r;
+
+                if (y->col == RED)
+                {
+                    z->p->col = y->col = BLACK;
+                    z->p->p->col = RED;
+                    z = z->p->p;
+                }
+                else
+                {
+                    if (z == z->p->r)
+                        left_rotate(z = z->p);
+
+                    z->p->col = BLACK;
+                    z->p->p->col = RED;
+                    right_rotate(z->p->p);
+                }
             }
+            else
+            {
+                node *y = z->p->p->l;
 
-        } else {
-            node *y = z->p->p->l;
+                if (y->col == RED)
+                {
+                    z->p->col = y->col = BLACK;
+                    z->p->p->col = RED;
+                    z = z->p->p;
+                }
+                else
+                {
+                    if (z == z->p->l)
+                        right_rotate(z = z->p);
 
-            if(y->col == RED) {
-                z->p->col = y->col = BLACK;
-                z->p->p->col = RED;
-                z = z->p->p;
-
-            } else {
-                if(z == z->p->l)
-                    right_rotate(z = z->p);
-
-                z->p->col = BLACK;
-                z->p->p->col = RED;
-                left_rotate(z->p->p);
+                    z->p->col = BLACK;
+                    z->p->p->col = RED;
+                    left_rotate(z->p->p);
+                }
             }
         }
+
+        root->col = BLACK;
     }
 
-    root->col = BLACK;
-}
+    template <class T, class Compare>
+    void red_black_tree<T, Compare>::fix_erase(node *x)
+    {
 
-template <class T, class Compare>
-void red_black_tree<T, Compare>::fix_erase(node *x) {
+        while (x != root and x->col == BLACK)
+        {
 
-    while(x != root and x->col == BLACK) {
+            if (x == x->p->l)
+            {
+                node *w = x->p->r;
 
-        if(x == x->p->l) {
-            node *w = x->p->r;
+                if (w->col == RED)
+                {
+                    w->col = BLACK;
+                    x->p->col = RED;
+                    left_rotate(x->p);
+                    w = x->p->r;
+                }
 
-            if(w->col == RED) {
-                w->col = BLACK;
-                x->p->col = RED;
-                left_rotate(x->p);
-                w = x->p->r;
-            }
-
-            if(w->l->col == BLACK
-                and w->r->col == BLACK) {
+                if (w->l->col == BLACK and w->r->col == BLACK)
+                {
                     w->col = RED;
                     x = x->p;
 
@@ -416,4 +439,4 @@ typename red_black_tree<T, Compare>::iterator red_black_tree<T, Compare>::erase(
     return nxt;
 }
 
-// } // namespace impl
+} // namespace RBtree

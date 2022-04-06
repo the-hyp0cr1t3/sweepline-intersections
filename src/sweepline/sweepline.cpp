@@ -17,8 +17,8 @@
 // template<typename T>
 // using bbst = std::set<T>;
 
-template<typename T>
-using bbst = red_black_tree<T>;
+template <typename T>
+using bbst = RBtree::red_black_tree<T>;
 
 namespace Sweepline {
 

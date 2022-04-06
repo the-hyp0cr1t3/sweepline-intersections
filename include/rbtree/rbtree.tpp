@@ -13,22 +13,25 @@
 #include <algorithm>
 #include <type_traits>
 
-// namespace impl {
+namespace RBtree {
 
 /// An enum for the colour of the rbtree nodes
-enum color { RED, BLACK };
+enum color {
+    RED,    ///< Denotes a red node
+    BLACK   ///< Denotes a black node
+};
 
 /**
- * @brief A node struct to keep track of information within each node of the rbtree.
+ * @brief A generic node struct
  * @tparam T The type of the key
  */
 template <class T>
 struct node_impl {
     const T key;        ///< The key value
 
-    node_impl *l;       ///< A pointer to the left child, nullptr by default
-    node_impl *r;       ///< A pointer to the right child, nullptr by default
-    node_impl *p;       ///< A pointer to the parent, nullptr by default
+    node_impl *l;       ///< A pointer to the left child, points to `node_impl::sentinel_ptr` by default
+    node_impl *r;       ///< A pointer to the right child, points to `node_impl::sentinel_ptr` by default
+    node_impl *p;       ///< A pointer to the parent, points to `node_impl::sentinel_ptr` by default
 
     color col { RED };  ///< The colour of the node, RED by default
 
@@ -44,8 +47,8 @@ struct node_impl {
      * @brief Finds the predecessor of a node
      *
      * @param it A pointer to the node
-     * @return node_impl* A pointer to the predecessor if it exists
-     * @return nullptr otherwise
+     * @return `node_impl*` A pointer to the predecessor if it exists
+     * @return `nullptr` otherwise
      */
     static node_impl *prev(node_impl *it);
 
@@ -53,18 +56,26 @@ struct node_impl {
      * @brief Finds the successor of a node
      *
      * @param it A pointer to the node
-     * @return node_impl* A pointer to the successor if it exists
-     * @return nullptr otherwise
+     * @return `node_impl*` A pointer to the successor if it exists
+     * @return `nullptr` otherwise
      */
     static node_impl *next(node_impl *it);
 
-    /// A pointer to a sentinel node
+    /// A pointer to the sentinel node
     static node_impl *sentinel_ptr;
 };
 
+/// Sentinel ptr definition
 template <class T>
 node_impl<T> *node_impl<T>::sentinel_ptr = nullptr;
 
+/**
+ * @brief Gets the sentinel node associated with `node_impl<T>` if it exists,
+ * otherwise creates a new one and sets it as the designated sentinel node.
+ *
+ * @tparam T The type of the key
+ * @return `node_impl<T>*` A pointer to the sentinel node.
+ */
 template <class T>
 node_impl<T> *get_sentinel() {
     if(!node_impl<T>::sentinel_ptr) {
@@ -393,15 +404,15 @@ public:
 
 };
 
-// } // namespace impl
-
-#include <rbtree_impl.tpp>
-
 /**
  * @brief Class template argument deduction for custom compare
  * @see [CTAD](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction)
- * @tparam T
- * @tparam Compare
+ * @tparam T The type of the key
+ * @tparam Compare The type of the Compare functor
  */
 template <class T, class Compare>
 red_black_tree(T, Compare) -> red_black_tree<T, Compare>;
+
+} // namespace RBtree
+
+#include <rbtree_impl.tpp>
