@@ -69,6 +69,7 @@ configure_file (
   "${PROJECT_BINARY_DIR}/include/utils/utils.hpp"
 )
 
+# generate run.py with path variables substituted in
 configure_file (
   "${PROJECT_SOURCE_DIR}/scripts/run.py.in"
   "${PROJECT_SOURCE_DIR}/scripts/run.py"

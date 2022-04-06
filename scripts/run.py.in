@@ -5,18 +5,20 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 import seaborn as sns
 from parse import search
- 
+
 sns.set_style("darkgrid")
 sns.set_context("talk")
 sns.set_palette("magma")
- 
+
 plt.rcParams["figure.edgecolor"] = "black"
 plt.rcParams["axes.edgecolor"] = "black"
 plt.rcParams["axes.linewidth"] = 2.50
- 
+
+# Path is substituted in by cmake during configure phase
+# Run the generated file, not this one
 OUT_PATH = "@CMAKE_BINARY_DIR@/run_output.txt"
 EXEC_CMD = [ "@CMAKE_SOURCE_DIR@/bin/app", "-nc", "-o" , OUT_PATH, "-i" ]
- 
+
 def getData(segmentPath):
     # Reads the line segments from segmentPath and intersection points from OUT_PATH
     segments = []
@@ -37,9 +39,9 @@ def getData(segmentPath):
         m = int(lines[0])
         for i in range(1, m+1):
             points.append(tuple(search("({:f}, {:f})", lines[i])))
-    
+
     return {"segments": segments, "points": points}
- 
+
 def plotData(data, ax=None, markerSize=50, monochrome = False):
     # Plots the segments and intersection points
     ax = plt.gca()
@@ -56,13 +58,13 @@ def plotData(data, ax=None, markerSize=50, monochrome = False):
         scatterpoint = mlines.Line2D([], [], color="orange", marker="o", markersize=10, markeredgecolor="black", markeredgewidth=1.5, ls="")
         ax.legend(handles=[scatterpoint], labels=[len(data["points"])], loc="upper right", prop={'size': 20, 'weight': 'bold'}, framealpha=1)
     plt.show()
- 
+
 def main():
     # Runs the algorithm to find intersection points on given input file and stores the intersection points in OUT_PATH
     subprocess.run(EXEC_CMD + [sys.argv[1]])
 
     print("Plotting graph...")
     plotData(getData(sys.argv[1]))
- 
+
 if __name__ == "__main__":
     main()

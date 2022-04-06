@@ -33,6 +33,10 @@ namespace Sweepline {
       return format_col(enable_color, fmt::emphasis::faint | fg(fmt::color::peach_puff), "{}", t);
     }
 
+    std::string format_heading_text(std::string t, bool enable_color) {
+      return format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::orange), "{}", t);
+    }
+
     std::string format_event_type(Geometry::event_t::type tp, bool enable_color) {
       return format_col(enable_color, fmt::emphasis::bold | fg(type_col[tp]), "{}",
                 (tp == Geometry::event_t::type::begin? "begin"
@@ -85,7 +89,7 @@ namespace Sweepline {
     Geometry::sweeplineX = -std::numeric_limits<Geometry::float_t>::max();
 
     if(verbose) {
-      std::cerr << format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::orange), "line_segments") << " = {\n";
+      std::cerr << detail::format_heading_text("line_segments", enable_color) << " = {\n";
       for(auto &x: line_segments)
         std::cerr << '\t' << detail::format_segment(x, enable_color) << ',' << std::endl;
       std::cerr << '}' << std::endl << std::endl;
@@ -109,7 +113,7 @@ namespace Sweepline {
     }
 
     if(verbose) {
-      std::cerr << format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::orange), "vertical_segs") << " = {";
+      std::cerr << detail::format_heading_text("vertical_segs", enable_color) << " = {";
       bool fst = false;
       for(auto &x: vertical_segs)
         std::cerr << (fst? "" : ", ") << detail::format_segment(x, enable_color), fst = false;
@@ -188,13 +192,13 @@ namespace Sweepline {
 
         std::cerr << detail::format_neutral_text("initially:\n", enable_color);
 
-        std::cerr << format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::orange), "event_queue") << " = {";
+        std::cerr << detail::format_heading_text("event_queue", enable_color) << " = {";
         std::cerr << detail::format_event(top, enable_color);
         for(auto &x: event_queue)
           std::cerr << ", " << detail::format_event(x, enable_color);
         std::cerr << '}' << std::endl;
 
-        std::cerr << format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::orange), "segment_ordering") << " = {";
+        std::cerr << detail::format_heading_text("segment_ordering", enable_color) << " = {";
         {
           bool fst = true;
           for(auto &x: seg_ordering)
@@ -341,7 +345,7 @@ namespace Sweepline {
       if(verbose) {
         std::cerr << detail::format_neutral_text("\nfinally:\n", enable_color);
 
-        std::cerr << format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::orange), "event_queue") << " = {";
+        std::cerr << detail::format_heading_text("event_queue", enable_color) << " = {";
         {
           bool fst = true;
           for(auto &x: event_queue)
@@ -349,7 +353,7 @@ namespace Sweepline {
           std::cerr << '}' << std::endl;
         }
 
-        std::cerr << format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::orange), "segment_ordering") << " = {";
+        std::cerr << detail::format_heading_text("segment_ordering", enable_color) << " = {";
         {
           bool fst = true;
           for(auto &x: seg_ordering)

@@ -1,4 +1,7 @@
-add_executable(app main.cpp utils.cpp)
+add_executable(app
+  main.cpp
+  "${CMAKE_SOURCE_DIR}/src/utils/utils.cpp"
+)
 
 target_include_directories(app PRIVATE
   "${PROJECT_BINARY_DIR}/include/utils"
