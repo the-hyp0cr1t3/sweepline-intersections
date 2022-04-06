@@ -13,12 +13,12 @@
 #define format_col(enable_color, ts, argn...) \
   fmt::format((enable_color? ts : fmt::v8::text_style()), argn)
 
-#include <set>
-template<typename T>
-using bbst = std::set<T>;
-
+// #include <set>
 // template<typename T>
-// using bbst = red_black_tree<T>;
+// using bbst = std::set<T>;
+
+template<typename T>
+using bbst = red_black_tree<T>;
 
 namespace Sweepline {
 

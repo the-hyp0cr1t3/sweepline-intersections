@@ -1,7 +1,7 @@
 /**
  * @file iterator.tpp
  * @author the-hyp0cr1t3
- * @brief Describes an STL-like raw_iterator template for the rbtree
+ * @brief Describes an STL-like raw iterator template for the rbtree
  * @date 2022-03-25
  */
 #pragma once
@@ -10,7 +10,8 @@
 // concept has_key = requires(T x) { x.key; };      // C++20 only
 
 /**
- * @brief STL-like raw_iterator template for the rbtree
+ * @class raw_iterator
+ * @brief STL-like raw iterator template for the rbtree
  *
  * @tparam node_t The node type
  * @tparam key_t The key type
@@ -31,25 +32,25 @@ struct raw_iterator {
     raw_iterator(node_t *ptr = nullptr): m_ptr(ptr) {}
 
     /**
-     * @brief Construct a new raw iterator object
+     * @brief Copy constructor
      *
      * @param other Another iterator to copy
      */
     raw_iterator(const raw_iterator &other) = default;
 
     /**
-     * @brief = operator overload
+     * @brief Overloading the `=` operator (assignment)
      *
      * @param other Another iterator to copy
-     * @return raw_iterator& A reference to this iterator after making the copy
+     * @return `raw_iterator&` A reference to this iterator after making the copy
      */
     raw_iterator &operator=(const raw_iterator &other) = default;
 
     /**
-     * @brief = operator overload
+     * @brief Overloading the `=` operator (assignment)
      *
      * @param ptr Pointer which the iterator will use under the hood
-     * @return raw_iterator& A reference to this iterator after making the copy
+     * @return `raw_iterator&` A reference to this iterator after making the copy
      */
     raw_iterator &operator=(pointer ptr) {
         m_ptr = ptr;
@@ -59,40 +60,40 @@ struct raw_iterator {
     /**
      * @brief Checks if this iterator is valid
      *
-     * @return true if it points to a non null object
-     * @return false otherwise
+     * @return `true` if it points to a non null object
+     * @return `false` otherwise
      */
     operator bool() const { return m_ptr; }
 
     /**
-     * @brief == operator overload
+     * @brief Overloading the `==` operator
      *
      * @param itr The other iterator to compare to
-     * @return true if the pointers of the iterators match
-     * @return false otherwise
+     * @return `true` if the pointers of the iterators match
+     * @return `false` otherwise
      */
     bool operator==(const raw_iterator &itr) const {
         return m_ptr == itr.get_const_ptr();
     }
 
     /**
-     * @brief != operator overload
+     * @brief Overloading the `!=` operator
      *
      * @param itr The other iterator to compare to
-     * @return true if the pointers of the iterators do not match
-     * @return false otherwise
+     * @return `true` if the pointers of the iterators do not match
+     * @return `false` otherwise
      */
     bool operator!=(const raw_iterator &itr) const {
         return m_ptr != itr.get_const_ptr();
     }
 
     /**
-     * @brief ++ (prefix inc) operator overload
+     * @brief Overloading the `++` operator (prefix increment)
      *
-     * Calls node_t::next under the hood to get the next pointer.
+     * Calls node_t::next under the hood to get the next pointer. <br>
      * Returns nullptr if there is no successor node.
      *
-     * @return raw_iterator& An iterator to the successor node
+     * @return `raw_iterator&` An iterator to the successor node
      */
     raw_iterator &operator++() {
         m_ptr = node_t::next(m_ptr);
@@ -100,12 +101,12 @@ struct raw_iterator {
     }
 
     /**
-     * @brief -- (prefix dec) operator overload
+     * @brief Overloading the `--` operator (prefix decrement)
      *
-     * Calls node_t::prev under the hood to get the previous pointer.
+     * Calls node_t::prev under the hood to get the previous pointer. <br>
      * Returns nullptr if there is no predecessor node.
      *
-     * @return raw_iterator& An iterator to the predecessor node
+     * @return `raw_iterator&` An iterator to the predecessor node
      */
     raw_iterator &operator--() {
         m_ptr = node_t::prev(m_ptr);
@@ -113,12 +114,12 @@ struct raw_iterator {
     }
 
     /**
-     * @brief ++ (postfix inc) operator overload
+     * @brief Overloading the `++` operator (postfix increment)
      *
-     * Calls node_t::next under the hood to get the next pointer.
+     * Calls node_t::next under the hood to get the next pointer. <br>
      * Returns nullptr if there is no successor node.
      *
-     * @return raw_iterator An iterator to the successor node
+     * @return `raw_iterator` An iterator to the successor node
      */
     raw_iterator operator++(int) {
         raw_iterator res{*this};
@@ -127,12 +128,12 @@ struct raw_iterator {
     }
 
     /**
-     * @brief ++ (postfix dec) operator overload
+     * @brief Overloading the `--` operator (postfix decrement)
      *
-     * Calls node_t::next under the hood to get the previous pointer.
+     * Calls node_t::prev under the hood to get the previous pointer. <br>
      * Returns nullptr if there is no predecessor node.
      *
-     * @return raw_iterator An iterator to the predecessor node
+     * @return `raw_iterator` An iterator to the predecessor node
      */
     raw_iterator operator--(int) {
         raw_iterator res{*this};
@@ -141,41 +142,41 @@ struct raw_iterator {
     }
 
     /**
-     * @brief * (dereference) operator overload
+     * @brief Overloading the `*` operator (dereference)
      *
      * Mimics bare pointers, can be dereferenced like one, to access the node's key.
      *
-     * @return reference A reference to the node's key
+     * @return `reference` A reference to the node's key
      */
     reference operator*() { return m_ptr->key; }
 
     /**
-     * @brief * (dereference) operator overload
+     * @brief Overloading the `*` operator (dereference)
      *
      * Mimics bare pointers, can be dereferenced like one, to access the node's key.
      *
-     * @return const reference A const reference to the node's key
+     * @return `const reference` A const reference to the node's key
      */
     const reference operator*() const { return m_ptr->key; }
 
     /**
-     * @brief -> operator overload
+     * @brief Overloading the `->` operator
      *
-     * @return pointer A pointer to the underlying node ptr
+     * @return `pointer` A pointer to the underlying node ptr
      */
     pointer operator->() { return &m_ptr->key; }
 
     /**
      * @brief Get the const ptr object
      *
-     * @return const node_t* A const pointer to the underlying node ptr
+     * @return `const node_t*` A const pointer to the underlying node ptr
      */
     const node_t *get_const_ptr() const { return m_ptr; }
 
     /**
      * @brief Get the ptr object
      *
-     * @return node_t* A pointer to the underlying node ptr
+     * @return `node_t*` A pointer to the underlying node ptr
      */
     node_t *get_ptr() const { return m_ptr; }
 

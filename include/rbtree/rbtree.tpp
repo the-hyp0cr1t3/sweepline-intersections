@@ -1,7 +1,7 @@
 /**
- * @file red_black_tree.tpp
+ * @file rbtree.tpp
  * @author the-hyp0cr1t3
- * @brief Red black tree templated class
+ * @brief Red black tree template class
  * @date 2022-03-25
  */
 #pragma once
