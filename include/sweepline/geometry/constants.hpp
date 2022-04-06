@@ -15,6 +15,8 @@ namespace Sweepline::Geometry {
   /// Permissible error; in other words, limiting accuracy
   inline constexpr float_t EPS = std::numeric_limits<float>::epsilon();
 
+  /// \cond
   inline constexpr float_t EPS_INC = 5 * EPS;
+  /// \endcond
 
 } // namespace Sweepline::Geometry

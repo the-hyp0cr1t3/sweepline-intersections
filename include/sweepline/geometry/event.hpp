@@ -51,8 +51,8 @@ namespace Sweepline::Geometry {
      * Required by (`std::less<T>`, the defalt comparator of) the event queue BBST
      * to make comparisons between events and establish an ordering.
      *
-     * Compares on, in decreasing priority, the tuple `<p.x, p.y, seg_id>`.
-     * All floating point comparisons are done within a neighbourhood of `Sweepline::Geometry::EPS`.
+     * Compares on, in decreasing priority, the tuple `<p.x, p.y, p.seg_id>`. <br>
+     * All floating point comparisons are done within a neighbourhood of `::EPS`.
      *
      * @param e The other event to be compared to
      * @return `true` if it compares less than the other event

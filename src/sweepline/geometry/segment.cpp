@@ -9,7 +9,7 @@ SGfloat_t Sweepline::Geometry::segment_t::eval_y(SGfloat_t x) const {
 }
 
 bool Sweepline::Geometry::segment_t::operator < (const segment_t &other) const {
-    return eval_y(sweepline_X) < other.eval_y(sweepline_X) - EPS;
+    return eval_y(sweeplineX) < other.eval_y(sweeplineX) - EPS;
 }
 
 bool Sweepline::Geometry::can_intersect_1d(
@@ -45,7 +45,3 @@ Sweepline::Geometry::point_t Sweepline::Geometry::intersection_point(const segme
 
     return point_t {(B1 * C2 - B2 * C1) / (A1 * B2 - A2 * B1), (C1 * A2 - C2 * A1) / (A1 * B2 - A2 * B1)};
 }
-
-// std::ostream &Sweepline::Geometry::operator << (std::ostream &os, const Sweepline::Geometry::segment_t &s) {
-//     return os << "{ " << s.p << ", " << s.q << ", id=" << s.seg_id + 1 << " }";
-// }

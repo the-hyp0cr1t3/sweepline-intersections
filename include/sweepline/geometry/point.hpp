@@ -23,22 +23,13 @@ namespace Sweepline::Geometry {
     /**
      * @brief Overloading the == operator for point_t
      *
-     * All floating point comparisons are done within a neighbourhood of `Sweepline::Geometry::EPS`.
+     * All floating point comparisons are done within a neighbourhood of `::EPS`.
      *
      * @param other The other point this is being compared to
-     * @return `true` if both the x and y coordinates match with max permissible error EPS
+     * @return `true` if both the x and y coordinates match with max permissible error `::EPS`
      * @return `false` otherwise
      */
     bool operator == (const point_t &other) const;
   };
-
-  /**
-   * @brief << operator overload for point_t
-   *
-   * @param os The output stream to write to
-   * @param p The point to be written
-   * @return std::ostream& A reference to the output stream after writing to it
-   */
-  // std::ostream &operator << (std::ostream &os, const point_t &p);
 
 } // namespace Sweepline::Geometry
