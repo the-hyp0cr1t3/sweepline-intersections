@@ -2,12 +2,12 @@
 
 To configure:
 ```sh
-cmake -S . -B build
+cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
 ```
 
 To build:
 ```sh
-cmake --build build
+cmake --build build --config Release
 ```
 
 To test:
@@ -15,7 +15,7 @@ To test:
 cmake --build build --target test
 ```
 
-To build docs (requires Doxygen, output in build/docs/html):
+To build docs (requires Doxygen, output in docs/html):
 ```
 cmake --build build --target docs
 ```
@@ -23,4 +23,9 @@ cmake --build build --target docs
 To run:
 ```sh
 ./bin/app
+```
+
+To run benchmark:
+```sh
+./bin/bench --benchmark_counters_tabular=true
 ```

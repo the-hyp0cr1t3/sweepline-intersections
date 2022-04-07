@@ -71,7 +71,7 @@ configure_file (
 
 # generate run.py with path variables substituted in
 configure_file (
-  "${PROJECT_SOURCE_DIR}/scripts/run.py.in"
+  "${PROJECT_SOURCE_DIR}/config/run.py.in"
   "${PROJECT_SOURCE_DIR}/scripts/run.py"
 )
 
@@ -81,7 +81,7 @@ add_subdirectory(src)
 # executable code is here
 add_subdirectory(app)
 
-# testing only available if this is the main project
+# testing only if this is the main project
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     add_subdirectory(tests)
 endif()
