@@ -146,14 +146,9 @@ python3 run.py [input_file_path]
 ## Testing
 This project uses [GoogleTest](https://github.com/google/googletest) for its unit tests and [GoogleBenchmark](https://github.com/google/benchmark) for benchmarking.
 
-#### Testing `find_intersections()` against various small edge cases:
+#### Testing `find_intersections()` against various edge cases:
 ```cmake
 cmake --build build --target test
-```
-
-#### Benchmarking against varying input sizes:
-```sh
-./bin/bench --benchmark_counters_tabular=true
 ```
 
 #### Stress testing the Red Black tree implementation:
@@ -161,3 +156,61 @@ cmake --build build --target test
 cd scripts
 ./stress_rbtree.sh rbtree_test
 ```
+
+#### Benchmarking against varying input sizes:
+```sh
+./bin/bench --benchmark_counters_tabular=true
+```
+
+```
+2022-03-31T04:19:51+05:30
+Running ./bench
+Run on (12 X 3000 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x6)
+  L1 Instruction 32 KiB (x6)
+  L2 Unified 512 KiB (x6)
+  L3 Unified 4096 KiB (x2)
+Load Average: 0.95, 1.85, 1.61
+***WARNING*** CPU scaling is enabled, the benchmark real time measurements may be noisy and will incur extra overhead.
+------------------------------------------------------------------------------------------------
+Benchmark                       Time             CPU   Iterations num_intersections num_segments
+------------------------------------------------------------------------------------------------
+BM_ObliqueGrid/32/16       622496 ns       622008 ns         1167               512           48
+BM_ObliqueGrid/128/16     2997460 ns      2993406 ns          234            2.048k          144
+BM_ObliqueGrid/512/16    13430223 ns     13408425 ns           52            8.192k          528
+BM_ObliqueGrid/32/64      2520555 ns      2518585 ns          276            2.048k           96
+BM_ObliqueGrid/128/64    11492670 ns     11479617 ns           63            8.192k          192
+BM_ObliqueGrid/512/64    54566964 ns     54510818 ns           13           32.768k          576
+BM_ObliqueGrid/32/256    11395191 ns     11383711 ns           57            8.192k          288
+BM_ObliqueGrid/128/256   49801564 ns     49742071 ns           14           32.768k          384
+BM_ObliqueGrid/512/256  214269060 ns    213970551 ns            3          131.072k          768
+-----------------------------------------------------------------
+Benchmark                       Time             CPU   Iterations
+-----------------------------------------------------------------
+BM_ObliqueGrid_BigO         96.45 NlgN      96.32 NlgN
+BM_ObliqueGrid_RMS              6 %             6 %
+------------------------------------------------------------------------------------------------
+Benchmark                       Time             CPU   Iterations num_intersections num_segments
+------------------------------------------------------------------------------------------------
+BM_OriginStar/3              2218 ns         2212 ns       319172                 1            3
+BM_OriginStar/2003        1173129 ns      1171431 ns          631                 1       2.003k
+BM_OriginStar/4003        2245344 ns      2243113 ns          325                 1       4.003k
+BM_OriginStar/6003        3301363 ns      3294699 ns          218                 1       6.003k
+BM_OriginStar/8003        4346930 ns      4342962 ns          163                 1       8.003k
+-----------------------------------------------------------------
+Benchmark                       Time             CPU   Iterations
+-----------------------------------------------------------------
+BM_OriginStar_BigO          43.34 NlgN      43.28 NlgN
+BM_OriginStar_RMS               6 %             6 %
+```
+
+## Report
+View the report [here](./report/report.ipynb).
+![complexity_plot](https://user-images.githubusercontent.com/55075129/162203618-d92f48b8-d5b5-4d88-a5f7-57a07a761abc.png)
+This empirically proves the relation
+$$ T(n, k) = \Theta((n+k)logn) $$
+
+</br>
+
+*This page uses math latex formatting. Download the [extension](https://chrome.google.com/webstore/detail/github-math-display/cgolaobglebjonjiblcjagnpmdmlgmda) to render it.*
