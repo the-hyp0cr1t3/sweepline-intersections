@@ -91,7 +91,7 @@ node_impl<T> *get_sentinel() {
  * @code
  * #include <iostream>
  * #include <vector>
- * #include <red_black_tree.tpp>
+ * #include <rbtree.tpp>
  *
  * struct Box {
  *     int length, breadth;
@@ -102,7 +102,7 @@ node_impl<T> *get_sentinel() {
  *
  * int main() {
  *     std::vector<int> v{100, 200, 200, 300};
- *     red_black_tree<int> rbtree{3, 3, 4, -2, 5, -1, 5};
+ *     RBtree::red_black_tree<int> rbtree{3, 3, 4, -2, 5, -1, 5};
  *     rbtree.erase(4);
  *     rbtree.insert(20);
  *     rbtree.insert(20);
@@ -126,11 +126,11 @@ node_impl<T> *get_sentinel() {
  *     auto cmp = [](const Box &a, const Box &b) {
  *         return a.area() < b.area();
  *     };
- *     red_black_tree<Box, decltype(cmp)> custom_rbtree(cmp);
+ *     RBtree::red_black_tree<Box, decltype(cmp)> custom_rbtree(cmp);
  *
  *
  *     // custom compare method 2:
- *     red_black_tree custom_rbtree(
+ *     RBtree::red_black_tree custom_rbtree(
  *         Box{},
  *         [](const Box &a, const Box &b) {
  *             return a.area() < b.area();
