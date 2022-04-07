@@ -3,63 +3,6 @@
 
 This is a modern C++ implementation of the [Bentley-Ottman algorithm](https://en.wikipedia.org/wiki/Bentley%E2%80%93Ottmann_algorithm) from (almost) scratch because why not.
 
-## File structure
-
-```
-.
-├── docs
-│   └── Doxyfile
-├── examples
-│   ├── edge_cases
-│   │   ├── butterfly.txt
-│   │   ├── coordinate_axes_1.txt
-│   │   ├── ...
-│   │   ├── ..
-│   │   └── vertical_parallel.txt
-│   └── big cases
-│       └── ...
-├── include
-│   ├── constants.hpp
-│   ├── event.hpp
-│   ├── intersection.hpp
-│   ├── iterator.tpp
-│   ├── point.hpp
-│   ├── red_black_tree.tpp
-│   ├── red_black_tree_impl.tpp
-│   ├── segment.hpp
-│   └── utils.hpp
-├── report
-│   ├── benchmark.csv
-│   ├── report.html
-│   └── report.ipynb
-├── src
-│   ├── event.cpp
-│   ├── intersection.cpp
-│   ├── main.cpp
-│   ├── point.cpp
-│   ├── segment.cpp
-│   └── utils.cpp
-├── tests
-│   ├── benchmark
-│   │   ├── generators
-│   │   │   ├── oblique_grid.cpp
-│   │   │   └── origin_star.cpp
-│   │   ├── include
-│   │   │   └── generators.hpp
-│   │   └── benchmark.cpp
-│   ├── red_black_tree
-│   │   ├── generator.cpp
-│   │   ├── normalize.cpp
-│   │   ├── red_black_tree.cpp
-│   │   └── stl_set.cpp
-│   ├── stress_rbtree.sh
-│   └── verify_edge_cases.sh
-├── CMakeLists.txt
-├── requirements.txt
-├── run.py
-└── README.md
-```
-
 ## Install Dependencies
 To build the project you must have [CMake](https://cmake.org/install/) installed.
 
