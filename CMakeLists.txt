@@ -1,3 +1,6 @@
+# Tested and works on Ubuntu 20.04
+# Windows seems to have some issues, still trying to learn multiplatform
+
 cmake_minimum_required(VERSION 3.17)
 
 project(
@@ -24,11 +27,6 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
       # Debug flags
       $<$<CONFIG:DEBUG>:-O0>
       $<$<CONFIG:DEBUG>:-ggdb3>
-
-      # common flags
-      -Wall
-      -Werror
-      -Wno-parentheses
     )
 
     add_compile_definitions(
@@ -45,7 +43,6 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     else()
         message(STATUS "Doxygen not found, not building docs")
     endif()
-
 
     # enable creation and submission of dashboards and call enable_testing()
     include(CTest)
