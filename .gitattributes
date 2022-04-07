@@ -1,5 +1,4 @@
 docs/* linguist-detectable=false
 report/*.ipynb linguist-detectable=false
 report/*.html linguist-detectable=false
-config/run.py.in linguist-language=Python
 include/utils/utils.hpp.in linguist-language=C++
