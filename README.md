@@ -148,7 +148,7 @@ BM_OriginStar_BigO          43.34 NlgN      43.28 NlgN
 BM_OriginStar_RMS               6 %             6 %
 ```
 
-## Report
+## Timing Analysis
 View the report [here](./report/report.ipynb).
 ![complexity_plot](https://user-images.githubusercontent.com/55075129/162203618-d92f48b8-d5b5-4d88-a5f7-57a07a761abc.png)
 This empirically proves the relation
