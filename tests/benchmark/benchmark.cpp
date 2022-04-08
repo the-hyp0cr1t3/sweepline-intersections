@@ -1,8 +1,6 @@
 #include <benchmark/benchmark.h>
 #include <generators.hpp>
-#include <sweepline/sweepline.hpp>
-
-using Sweepline::intersection_t;
+#include <sweepline.hpp>
 
 /*
 static void CustomArguments(benchmark::internal::Benchmark* b) {
@@ -25,11 +23,11 @@ static void BM_ObliqueGrid(benchmark::State& state) {
         state.PauseTiming();
 
         // order seg.p and seg.q!!
-        std::vector<segment_t> segments = gen_oblique_grid(horiz, verti);
+        std::vector<geometry::segment_t> segments = generators::gen_oblique_grid(horiz, verti);
 
         state.ResumeTiming();
 
-        std::vector<intersection_t> result = Sweepline::find_intersections(segments);
+        std::vector<sweepline::intersection_t> result = sweepline::find_intersections(segments);
         benchmark::DoNotOptimize(result.data());
     }
 
@@ -57,11 +55,11 @@ static void BM_OriginStar(benchmark::State& state) {
         state.PauseTiming();
 
         // order seg.p and seg.q!!
-        std::vector<segment_t> segments = gen_origin_star(n);
+        std::vector<geometry::segment_t> segments = generators::gen_origin_star(n);
 
         state.ResumeTiming();
 
-        std::vector<intersection_t> result = Sweepline::find_intersections(segments);
+        std::vector<sweepline::intersection_t> result = sweepline::find_intersections(segments);
         benchmark::DoNotOptimize(result.data());
     }
 

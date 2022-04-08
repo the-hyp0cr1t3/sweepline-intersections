@@ -5,19 +5,25 @@
  * @date 2022-03-25
  */
 #pragma once
+
+#include <point.hpp>
+#include <segment.hpp>
+#include <event.hpp>
+
 #include <vector>
 #include <utility>
-#include <sweepline/geometry/point.hpp>
-#include <sweepline/geometry/event.hpp>
-#include <sweepline/geometry/segment.hpp>
 
-namespace Sweepline {
+
+namespace sweepline {
+
+  /// A global variable which stores the current X coordinate of the vertical sweepline
+  extern geometry::float_t sweeplineX;
 
   /**
    * @brief Simple struct to bind together information on an intersection of two or more segments
    */
   struct intersection_t {
-    Geometry::point_t pt;   ///< The point of intersection of some segments
+    geometry::point_t pt;   ///< The point of intersection of some segments
     std::vector<size_t> segments;   ///< A list of segments (their ids) which intersect at this point
   };
 
@@ -39,7 +45,11 @@ namespace Sweepline {
    * @param enable_color The `Utils::args::enable_color` flag
    * @return `std::vector<intersection_t>` A list of all intersections
    */
-  auto find_intersections(const std::vector<Geometry::segment_t> &line_segments, bool verbose = false, bool enable_color = true)
+  auto find_intersections (
+    const std::vector<geometry::segment_t> &line_segments,
+    bool verbose = false,
+    bool enable_color = true
+  )
     -> std::vector<intersection_t>;
 
-} // namespace Sweepline
+} // namespace sweepline

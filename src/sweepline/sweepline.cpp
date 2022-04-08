@@ -1,14 +1,14 @@
-#include <iostream>
-#include <array>
-#include <vector>
-#include <limits>
-#include <iomanip>
-#include <cmath>
+#include <sweepline.hpp>
+#include <red_black_tree.tpp>
+
 #include <fmt/format.h>
 #include <fmt/color.h>
-
-#include <sweepline/sweepline.hpp>
-#include <rbtree.tpp>
+#include <iostream>
+#include <iomanip>
+#include <limits>
+#include <cmath>
+#include <array>
+#include <vector>
 
 #define format_col(enable_color, ts, argn...) \
   fmt::format((enable_color? ts : fmt::v8::text_style()), argn)
@@ -18,15 +18,16 @@
 // using bbst = std::set<T>;
 
 template <typename T>
-using bbst = RBtree::red_black_tree<T>;
+using bbst = BBST::red_black_tree<T>;
 
-namespace Sweepline {
+
+namespace sweepline {
 
   namespace detail {
     std::array<fmt::color, 3> type_col {
-      fmt::color::light_sea_green,  // Geometry::event_t::type::begin
-      fmt::color::medium_purple,    // Geometry::event_t::type::interior
-      fmt::color::light_sky_blue    // Geometry::event_t::type::end
+      fmt::color::light_sea_green,  // sweepline::event_t::type::begin
+      fmt::color::medium_purple,    // sweepline::event_t::type::interior
+      fmt::color::light_sky_blue    // sweepline::event_t::type::end
     };
 
     std::string format_neutral_text(std::string t, bool enable_color) {
@@ -37,22 +38,22 @@ namespace Sweepline {
       return format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::orange), "{}", t);
     }
 
-    std::string format_event_type(Geometry::event_t::type tp, bool enable_color) {
+    std::string format_event_type(sweepline::event_t::type tp, bool enable_color) {
       return format_col(enable_color, fmt::emphasis::bold | fg(type_col[tp]), "{}",
-                (tp == Geometry::event_t::type::begin? "begin"
-                  : tp == Geometry::event_t::type::interior? "interior" : "end"));
+                (tp == sweepline::event_t::type::begin? "begin"
+                  : tp == sweepline::event_t::type::interior? "interior" : "end"));
     }
 
     std::string format_id(size_t id, bool enable_color) {
       return format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::khaki), "{}", id);
     }
 
-    std::string format_point(const Geometry::point_t &p, bool enable_color) {
+    std::string format_point(const geometry::point_t &p, bool enable_color) {
       return format_col(enable_color, fmt::emphasis::faint | fg(fmt::color::medium_aquamarine),
               "({:.3f}, {:.3f})", p.x, p.y);
     }
 
-    std::string format_event(const Geometry::event_t &e, bool enable_color) {
+    std::string format_event(const sweepline::event_t &e, bool enable_color) {
       return fmt::format("<{}, {}, {}>",
         format_point(e.p, enable_color),
         format_event_type(e.tp, enable_color),
@@ -61,7 +62,7 @@ namespace Sweepline {
       );
     }
 
-    std::string format_segment(const Geometry::segment_t &s, bool enable_color) {
+    std::string format_segment(const geometry::segment_t &s, bool enable_color) {
       return fmt::format("[{}, {}, {}]",
         format_point(s.p, enable_color),
         format_point(s.q, enable_color),
@@ -82,11 +83,11 @@ namespace Sweepline {
 
   } // namespace detail
 
-  Geometry::float_t Geometry::sweeplineX;
+  geometry::float_t sweeplineX;
 
-  std::vector<intersection_t> find_intersections(const std::vector<Geometry::segment_t> &line_segments, bool verbose, bool enable_color) {
+  std::vector<intersection_t> find_intersections(const std::vector<geometry::segment_t> &line_segments, bool verbose, bool enable_color) {
     std::vector<intersection_t> result;
-    Geometry::sweeplineX = -std::numeric_limits<Geometry::float_t>::max();
+    sweepline::sweeplineX = -std::numeric_limits<geometry::float_t>::max();
 
     if(verbose) {
       std::cerr << detail::format_heading_text("line_segments", enable_color) << " = {\n";
@@ -95,20 +96,20 @@ namespace Sweepline {
       std::cerr << '}' << std::endl << std::endl;
     }
 
-    bbst<Geometry::event_t> event_queue;
-    bbst<Geometry::segment_t> seg_ordering;
-    std::vector<Geometry::segment_t> vertical_segs;
+    bbst<sweepline::event_t> event_queue;
+    bbst<geometry::segment_t> seg_ordering;
+    std::vector<geometry::segment_t> vertical_segs;
 
     size_t n = line_segments.size();
     for(size_t i = 0; i < n; i++) {
-      const Geometry::point_t &p = line_segments[i].p;
-      const Geometry::point_t &q = line_segments[i].q;
+      const geometry::point_t &p = line_segments[i].p;
+      const geometry::point_t &q = line_segments[i].q;
 
-      if(std::fabs(p.x - q.x) < Geometry::EPS) {
+      if(std::fabs(p.x - q.x) < geometry::EPS) {
         vertical_segs.emplace_back(line_segments[i]);
       } else {
-        event_queue.insert({ p, Geometry::event_t::type::begin, i});
-        event_queue.insert({ q, Geometry::event_t::type::end,   i});
+        event_queue.insert({ p, sweepline::event_t::type::begin, i});
+        event_queue.insert({ q, sweepline::event_t::type::end,   i});
       }
     }
 
@@ -123,13 +124,13 @@ namespace Sweepline {
     }
 
     std::sort(vertical_segs.begin(), vertical_segs.end(),
-      [](const Geometry::segment_t &a, const Geometry::segment_t &b) {
+      [](const geometry::segment_t &a, const geometry::segment_t &b) {
         return a.p.x == b.p.x? a.p.y < b.p.y : a.p.x < b.p.x;
       }
     );
 
     for(size_t i = 0; i + 1 < vertical_segs.size(); i++) {
-      if(std::fabs(vertical_segs[i].q.y - vertical_segs[i + 1].p.y) < Geometry::EPS) {
+      if(std::fabs(vertical_segs[i].q.y - vertical_segs[i + 1].p.y) < geometry::EPS) {
         intersection_t it { vertical_segs[i].q,
                   std::vector<size_t>{ vertical_segs[i].seg_id, vertical_segs[i + 1].seg_id } };
         result.emplace_back(it);
@@ -144,14 +145,14 @@ namespace Sweepline {
     size_t vert_idx = 0;
 
     while(!event_queue.empty()) {
-      Geometry::event_t top = *event_queue.begin();
+      sweepline::event_t top = *event_queue.begin();
       event_queue.erase(event_queue.begin());
 
-      if(top.p.x < Geometry::sweeplineX) {
+      if(top.p.x < sweepline::sweeplineX) {
         if(verbose) {
           std::cerr << detail::format_neutral_text("top.p.x", enable_color) << " = " << top.p.x << std::endl;
           std::cerr << format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::green_yellow), "sweeplineX")
-                      << " = " << Geometry::sweeplineX << std::endl;
+                      << " = " << sweepline::sweeplineX << std::endl;
           std::cerr << detail::format_neutral_text("continuing...\n", enable_color);
           std::cerr << std::endl << "------------------------------------------------------------------------" << std::endl;
         }
@@ -159,19 +160,19 @@ namespace Sweepline {
       }
 
       while(vert_idx < vertical_segs.size()
-        and vertical_segs[vert_idx].p.x < Geometry::sweeplineX - Geometry::EPS) {
+        and vertical_segs[vert_idx].p.x < sweepline::sweeplineX - geometry::EPS) {
           vert_idx++;
       }
 
       while(vert_idx < vertical_segs.size()
-        and vertical_segs[vert_idx].p.x <= top.p.x + Geometry::EPS) {
+        and vertical_segs[vert_idx].p.x <= top.p.x + geometry::EPS) {
           auto &vseg = vertical_segs[vert_idx];
-          Geometry::sweeplineX = vseg.p.x;
-          auto it = seg_ordering.lower_bound(Geometry::segment_t{ vseg.p, vseg.p, 0 });
+          sweepline::sweeplineX = vseg.p.x;
+          auto it = seg_ordering.lower_bound(geometry::segment_t{ vseg.p, vseg.p, 0 });
           while(it != seg_ordering.end()) {
-            Geometry::float_t it_y = it->eval_y(Geometry::sweeplineX);
-            if(it_y > vseg.q.y + Geometry::EPS) break;
-            intersection_t itrsctn { Geometry::point_t{ Geometry::sweeplineX, it_y },
+            geometry::float_t it_y = it->eval_y(sweepline::sweeplineX);
+            if(it_y > vseg.q.y + geometry::EPS) break;
+            intersection_t itrsctn { geometry::point_t{ sweepline::sweeplineX, it_y },
                       std::vector<size_t>{ it->seg_id, vseg.seg_id } };
             result.emplace_back(itrsctn);
             if(verbose) {
@@ -184,11 +185,11 @@ namespace Sweepline {
           vert_idx++;
       }
 
-      Geometry::sweeplineX = top.p.x;
+      sweepline::sweeplineX = top.p.x;
 
       if(verbose) {
         std::cerr << format_col(enable_color, fmt::emphasis::bold | fg(fmt::color::green_yellow), "sweeplineX")
-                    << " = " << Geometry::sweeplineX << std::endl << std::endl;
+                    << " = " << sweepline::sweeplineX << std::endl << std::endl;
 
         std::cerr << detail::format_neutral_text("initially:\n", enable_color);
 
@@ -212,10 +213,10 @@ namespace Sweepline {
       active[top.tp].push_back(top.seg_id);
 
       while(!event_queue.empty()
-          and std::fabs(event_queue.begin()->p.x - top.p.x) < Geometry::EPS
-          and std::fabs(event_queue.begin()->p.y - top.p.y) < Geometry::EPS) {
+          and std::fabs(event_queue.begin()->p.x - top.p.x) < geometry::EPS
+          and std::fabs(event_queue.begin()->p.y - top.p.y) < geometry::EPS) {
 
-        Geometry::event_t nxt_top = *event_queue.begin();
+        sweepline::event_t nxt_top = *event_queue.begin();
         event_queue.erase(event_queue.begin());
         active[nxt_top.tp].push_back(nxt_top.seg_id);
       }
@@ -226,10 +227,10 @@ namespace Sweepline {
         {
           std::cerr << fmt::format("{} {} {}      = {{",
                           detail::format_neutral_text("segments with", enable_color),
-                          detail::format_event_type(Geometry::event_t::type::end, enable_color),
+                          detail::format_event_type(sweepline::event_t::type::end, enable_color),
                           detail::format_neutral_text("point here", enable_color));
           bool fst = true;
-          for(auto &x: active[Geometry::event_t::type::end])
+          for(auto &x: active[sweepline::event_t::type::end])
             std::cerr << (fst? "" : ", ") << detail::format_id(x + 1, enable_color), fst = false;
           std::cerr << '}' << std::endl;
         }
@@ -237,10 +238,10 @@ namespace Sweepline {
         {
           std::cerr << fmt::format("{} {} {} = {{",
                           detail::format_neutral_text("segments with", enable_color),
-                          detail::format_event_type(Geometry::event_t::type::interior, enable_color),
+                          detail::format_event_type(sweepline::event_t::type::interior, enable_color),
                           detail::format_neutral_text("point here", enable_color));
           bool fst = true;
-          for(auto &x: active[Geometry::event_t::type::interior])
+          for(auto &x: active[sweepline::event_t::type::interior])
             std::cerr << (fst? "" : ", ") << detail::format_id(x + 1, enable_color), fst = false;
           std::cerr << '}' << std::endl;
         }
@@ -248,67 +249,67 @@ namespace Sweepline {
         {
           std::cerr << fmt::format("{} {} {}    = {{",
                           detail::format_neutral_text("segments with", enable_color),
-                          detail::format_event_type(Geometry::event_t::type::begin, enable_color),
+                          detail::format_event_type(sweepline::event_t::type::begin, enable_color),
                           detail::format_neutral_text("point here", enable_color));
           bool fst = true;
-          for(auto &x: active[Geometry::event_t::type::begin])
+          for(auto &x: active[sweepline::event_t::type::begin])
             std::cerr << (fst? "" : ", ") << detail::format_id(x + 1, enable_color), fst = false;
           std::cerr << '}' << std::endl;
         }
       }
 
-      for(int idx: active[Geometry::event_t::type::end])
+      for(int idx: active[sweepline::event_t::type::end])
         seg_ordering.erase(line_segments[idx]);
 
-      for(int idx: active[Geometry::event_t::type::interior])
+      for(int idx: active[sweepline::event_t::type::interior])
         seg_ordering.erase(line_segments[idx]);
 
-      Geometry::sweeplineX += Geometry::EPS_INC;
-      Geometry::float_t mx = -std::numeric_limits<Geometry::float_t>::max();
-      Geometry::float_t mn = std::numeric_limits<Geometry::float_t>::max();
+      sweepline::sweeplineX += geometry::EPS_INC;
+      geometry::float_t mx = -std::numeric_limits<geometry::float_t>::max();
+      geometry::float_t mn = std::numeric_limits<geometry::float_t>::max();
 
-      for(int idx: active[Geometry::event_t::type::begin]) {
-        mn = std::min(mn, line_segments[idx].eval_y(Geometry::sweeplineX));
-        mx = std::max(mx, line_segments[idx].eval_y(Geometry::sweeplineX));
+      for(int idx: active[sweepline::event_t::type::begin]) {
+        mn = std::min(mn, line_segments[idx].eval_y(sweepline::sweeplineX));
+        mx = std::max(mx, line_segments[idx].eval_y(sweepline::sweeplineX));
         seg_ordering.insert(line_segments[idx]);
       }
 
-      for(int idx: active[Geometry::event_t::type::interior]) {
-        mn = std::min(mn, line_segments[idx].eval_y(Geometry::sweeplineX));
-        mx = std::max(mx, line_segments[idx].eval_y(Geometry::sweeplineX));
+      for(int idx: active[sweepline::event_t::type::interior]) {
+        mn = std::min(mn, line_segments[idx].eval_y(sweepline::sweeplineX));
+        mx = std::max(mx, line_segments[idx].eval_y(sweepline::sweeplineX));
         seg_ordering.insert(line_segments[idx]);
       }
 
-      if(active[Geometry::event_t::type::begin].size() + active[Geometry::event_t::type::interior].size() == 0) {
-        auto b_right = seg_ordering.lower_bound(Geometry::segment_t{ top.p, top.p, 0 });
+      if(active[sweepline::event_t::type::begin].size() + active[sweepline::event_t::type::interior].size() == 0) {
+        auto b_right = seg_ordering.lower_bound(geometry::segment_t{ top.p, top.p, 0 });
         if(b_right != seg_ordering.end() and b_right != seg_ordering.begin()) {
           auto b_left = b_right;
           --b_left;
           if(is_intersecting(*b_left, *b_right)) {
-            Geometry::point_t pt = intersection_point(*b_left, *b_right);
-            Geometry::event_t::type tp1 = b_left->p == pt? Geometry::event_t::type::begin : Geometry::event_t::type::interior;
-            Geometry::event_t::type tp2 = b_right->p == pt? Geometry::event_t::type::begin : Geometry::event_t::type::interior;
+            geometry::point_t pt = intersection_point(*b_left, *b_right);
+            sweepline::event_t::type tp1 = b_left->p == pt? sweepline::event_t::type::begin : sweepline::event_t::type::interior;
+            sweepline::event_t::type tp2 = b_right->p == pt? sweepline::event_t::type::begin : sweepline::event_t::type::interior;
 
-            event_queue.insert(Geometry::event_t{ pt, tp1, b_left->seg_id  });
-            event_queue.insert(Geometry::event_t{ pt, tp2, b_right->seg_id });
+            event_queue.insert(sweepline::event_t{ pt, tp1, b_left->seg_id  });
+            event_queue.insert(sweepline::event_t{ pt, tp2, b_right->seg_id });
           }
         }
       } else {
-        Geometry::point_t left { Geometry::sweeplineX, mn - 2 * Geometry::EPS }, right { Geometry::sweeplineX, mx + 2 * Geometry::EPS };
-        auto b_right = seg_ordering.lower_bound(Geometry::segment_t{ right, right, 0 });
-        auto s_left  = seg_ordering.lower_bound(Geometry::segment_t{ left,  left,  0 });
+        geometry::point_t left { sweepline::sweeplineX, mn - 2 * geometry::EPS }, right { sweepline::sweeplineX, mx + 2 * geometry::EPS };
+        auto b_right = seg_ordering.lower_bound(geometry::segment_t{ right, right, 0 });
+        auto s_left  = seg_ordering.lower_bound(geometry::segment_t{ left,  left,  0 });
 
         if(b_right != seg_ordering.end() and b_right != seg_ordering.begin()) {
           auto s_right = b_right;
           --s_right;
 
           if(is_intersecting(*s_right, *b_right)) {
-            Geometry::point_t pt = intersection_point(*s_right, *b_right);
-            Geometry::event_t::type tp1 = s_right->p == pt? Geometry::event_t::type::begin : Geometry::event_t::type::interior;
-            Geometry::event_t::type tp2 = b_right->p == pt? Geometry::event_t::type::begin : Geometry::event_t::type::interior;
+            geometry::point_t pt = intersection_point(*s_right, *b_right);
+            sweepline::event_t::type tp1 = s_right->p == pt? sweepline::event_t::type::begin : sweepline::event_t::type::interior;
+            sweepline::event_t::type tp2 = b_right->p == pt? sweepline::event_t::type::begin : sweepline::event_t::type::interior;
 
-            event_queue.insert(Geometry::event_t{ pt, tp1, s_right->seg_id });
-            event_queue.insert(Geometry::event_t{ pt, tp2, b_right->seg_id });
+            event_queue.insert(sweepline::event_t{ pt, tp1, s_right->seg_id });
+            event_queue.insert(sweepline::event_t{ pt, tp2, b_right->seg_id });
           }
         }
 
@@ -317,17 +318,17 @@ namespace Sweepline {
           --b_left;
 
           if(is_intersecting(*b_left, *s_left)) {
-            Geometry::point_t pt = intersection_point(*b_left, *s_left);
-            Geometry::event_t::type tp1 = b_left->p == pt? Geometry::event_t::type::begin : Geometry::event_t::type::interior;
-            Geometry::event_t::type tp2 = s_left->p == pt? Geometry::event_t::type::begin : Geometry::event_t::type::interior;
+            geometry::point_t pt = intersection_point(*b_left, *s_left);
+            sweepline::event_t::type tp1 = b_left->p == pt? sweepline::event_t::type::begin : sweepline::event_t::type::interior;
+            sweepline::event_t::type tp2 = s_left->p == pt? sweepline::event_t::type::begin : sweepline::event_t::type::interior;
 
-            event_queue.insert(Geometry::event_t{ pt, tp1, b_left->seg_id });
-            event_queue.insert(Geometry::event_t{ pt, tp2, s_left->seg_id });
+            event_queue.insert(sweepline::event_t{ pt, tp1, b_left->seg_id });
+            event_queue.insert(sweepline::event_t{ pt, tp2, s_left->seg_id });
           }
         }
       }
 
-      Geometry::sweeplineX -= Geometry::EPS_INC;
+      sweepline::sweeplineX -= geometry::EPS_INC;
 
       // we have an intersection
       if(active[0].size() + active[1].size() + active[2].size() > 1) {
@@ -395,4 +396,4 @@ namespace Sweepline {
     return answer;
   }
 
-} // namespace Sweepline
+} // namespace sweepline

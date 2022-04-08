@@ -4,7 +4,7 @@
 **/
 #include <fstream>
 #include <iostream>
-#include <rbtree.tpp>
+#include <red_black_tree.tpp>
 
 int main(int argc, char *argv[]) {
     using namespace std;
@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     ifstream fin(argv[1]);
     int n; fin >> n;
 
-    RBtree::red_black_tree<int> s;
+    BBST::red_black_tree<int> s;
     while(n--) {
         int t, val; fin >> t >> val;
         cout << s.contains(val) << '\n';

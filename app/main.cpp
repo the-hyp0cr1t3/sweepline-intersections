@@ -11,11 +11,7 @@
 #include <fmt/color.h>
 
 #include <utils.hpp>
-#include <sweepline/sweepline.hpp>
-
-using Sweepline::Geometry::point_t;
-using Sweepline::Geometry::segment_t;
-using Sweepline::intersection_t;
+#include <sweepline.hpp>
 
 /**
  * @brief Gathers input from stdin or a file and returns a vector of segments
@@ -26,13 +22,13 @@ using Sweepline::intersection_t;
  * — the coordinates of the endpoints \f$ p \f$ and \f$ q \f$ of the corresponding line segment.
  *
  * @pre `std::cin` must be redirected to appropriate file stream before function call
- * @return `std::vector<segment_t>` A vector of segments from the input
+ * @return `std::vector<geometry::segment_t>` A vector of segments from the input
  */
-std::vector<segment_t> input() {
+std::vector<geometry::segment_t> input() {
     size_t n;       // number of input segments
     std::cin >> n;
 
-    std::vector<segment_t> segments;
+    std::vector<geometry::segment_t> segments;
     segments.reserve(n);
 
     for(size_t i = 0; i < n; i++) {
@@ -42,7 +38,10 @@ std::vector<segment_t> input() {
         if(std::make_pair(x1, y1) > std::make_pair(x2, y2))
             std::swap(x1, x2), std::swap(y1, y2);
 
-        segments.emplace_back(segment_t{ point_t{ x1, y1 }, point_t{ x2, y2 }, i });
+        segments.emplace_back(geometry::segment_t{
+                                geometry::point_t{ x1, y1 },
+                                geometry::point_t{ x2, y2 },
+                                i });
     }
 
     return segments;
@@ -63,7 +62,7 @@ std::vector<segment_t> input() {
  * @param result A vector of intersection points to print
  * @param enable_color Commandline boolean flag which enables or disables printing in color
  */
-void output(const std::vector<intersection_t> &result, bool enable_color) {
+void output(const std::vector<sweepline::intersection_t> &result, bool enable_color) {
     std::cout << fmt::format("  {}\n", result.size());
     // std::cout << fmt::format("{}\n", result.size());
     for(auto it: result) {
@@ -115,13 +114,13 @@ int main(int argc, char *argv[]) {
     auto params = Utils::parse_args_and_redirect_streams(argc, argv);
 
     // reading input
-    std::vector<segment_t> segments = input();
+    std::vector<geometry::segment_t> segments = input();
 
 
     // finding intersections
     std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
 
-      std::vector<intersection_t> result = Sweepline::find_intersections(segments, params.verbose, params.enable_color);
+      std::vector<sweepline::intersection_t> result = sweepline::find_intersections(segments, params.verbose, params.enable_color);
 
     std::chrono::high_resolution_clock::duration total_runtime = std::chrono::high_resolution_clock::now() - start;
 

@@ -1,13 +1,15 @@
 /**
  * @file event.hpp
  * @author the-hyp0cr1t3
- * @brief Describes the event_t struct
+ * @brief Describes the Event struct
  * @date 2022-03-25
  */
 #pragma once
-#include <sweepline/geometry/point.hpp>
 
-namespace Sweepline::Geometry {
+#include <point.hpp>
+
+
+namespace sweepline {
 
   /**
    * @brief Event struct which encapsulates information about an event
@@ -18,7 +20,7 @@ namespace Sweepline::Geometry {
    */
   struct event_t {
     /// The point where the event occurs
-    point_t p;
+    geometry::point_t p;
 
     /// An enum for the type of event
     enum type {
@@ -42,7 +44,7 @@ namespace Sweepline::Geometry {
      * @param tp The type of the event
      * @param seg_id The id of the segment
      */
-    event_t(const point_t &p, type tp, size_t seg_id)
+    event_t(const geometry::point_t &p, type tp, size_t seg_id)
       : p(p), tp(tp), seg_id(seg_id) {}
 
     /**
@@ -62,4 +64,4 @@ namespace Sweepline::Geometry {
 
   };
 
-} // namespace Sweepline::Geometry
+} // namespace sweepline

@@ -1,14 +1,17 @@
 /**
  * @file point.hpp
  * @author the-hyp0cr1t3
- * @brief Describes the point_t struct
+ * @brief Describes the Point struct
  * @date 2022-03-25
  */
 #pragma once
-#include <iostream>
-#include <sweepline/geometry/constants.hpp>
 
-namespace Sweepline::Geometry {
+#include <constants.hpp>
+
+#include <iostream>
+
+
+namespace geometry {
 
   /**
    * @brief Simple point struct to store the x and y coordinates of point entities
@@ -32,4 +35,4 @@ namespace Sweepline::Geometry {
     bool operator == (const point_t &other) const;
   };
 
-} // namespace Sweepline::Geometry
+} // namespace geometry

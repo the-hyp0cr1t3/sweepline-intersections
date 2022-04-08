@@ -1,7 +1,8 @@
-#include <utils.hpp>
 #include <argparse.hpp>
 #include <fmt/format.h>
 #include <fmt/color.h>
+#include <utils.hpp>
+
 
 namespace detail {
 

@@ -1,54 +1,50 @@
 #include <gtest/gtest.h>
-#include <sweepline/sweepline.hpp>
+#include <sweepline.hpp>
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <cmath>
 
-namespace {
 
-using Sweepline::Geometry::EPS;
-using Sweepline::Geometry::point_t;
-using Sweepline::Geometry::segment_t;
-using Sweepline::intersection_t;
+namespace {
 
 class EdgeCases : public testing::Test {
 
 protected:
 
-    std::vector<segment_t> input(const std::string &fname) {
+    std::vector<geometry::segment_t> input(const std::string &fname) {
         std::ifstream fin(fname);
 
         size_t n;       // number of input segments
         fin >> n;
 
-        std::vector<segment_t> segments;
+        std::vector<geometry::segment_t> segments;
         segments.reserve(n);
 
         for(size_t i = 0; i < n; i++) {
-            Sweepline::Geometry::float_t x1, y1, x2, y2;
+            geometry::float_t x1, y1, x2, y2;
             fin >> x1 >> y1 >> x2 >> y2;
 
             if(std::make_pair(x1, y1) > std::make_pair(x2, y2))
                 std::swap(x1, x2), std::swap(y1, y2);
 
-            segments.emplace_back(segment_t{ point_t{ x1, y1 }, point_t{ x2, y2 }, i });
+            segments.emplace_back(geometry::segment_t{ geometry::point_t{ x1, y1 }, geometry::point_t{ x2, y2 }, i });
         }
 
         return segments;
     }
 
-    std::vector<intersection_t> expected_output(const std::string &fname) {
+    std::vector<sweepline::intersection_t> expected_output(const std::string &fname) {
         std::ifstream fin(fname);
 
         size_t m;       // number of intersection points
         fin >> m;
 
-        std::vector<intersection_t> result;
+        std::vector<sweepline::intersection_t> result;
         result.reserve(m);
 
         for(size_t i = 0; i < m; i++) {
-            Sweepline::Geometry::float_t x, y;
+            geometry::float_t x, y;
             fin >> x >> y;
 
             std::vector<size_t> segments;
@@ -64,8 +60,8 @@ protected:
             std::sort(segments.begin(), segments.end());
 
             result.emplace_back(
-                intersection_t {
-                    point_t{ x, y },
+                sweepline::intersection_t {
+                    geometry::point_t{ x, y },
                     segments
                 }
             );
@@ -73,26 +69,26 @@ protected:
 
         // sort intersection points by point
         std::sort(result.begin(), result.end(),
-            [](const intersection_t &lhs, const intersection_t &rhs) {
-                return std::fabs(lhs.pt.x - rhs.pt.x) < EPS?
-                        lhs.pt.y < rhs.pt.y - EPS : lhs.pt.x < rhs.pt.x - EPS;
+            [](const sweepline::intersection_t &lhs, const sweepline::intersection_t &rhs) {
+                return std::fabs(lhs.pt.x - rhs.pt.x) < geometry::EPS?
+                        lhs.pt.y < rhs.pt.y - geometry::EPS : lhs.pt.x < rhs.pt.x - geometry::EPS;
             }
         );
 
         return result;
     }
 
-    std::vector<intersection_t> normalize(std::vector<intersection_t> &&received) {
+    std::vector<sweepline::intersection_t> normalize(std::vector<sweepline::intersection_t> &&received) {
         // sort received intersection points by point
         std::sort(received.begin(), received.end(),
-            [](const intersection_t &lhs, const intersection_t &rhs) {
-                return std::fabs(lhs.pt.x - rhs.pt.x) < EPS?
-                        lhs.pt.y < rhs.pt.y - EPS : lhs.pt.x < rhs.pt.x - EPS;
+            [](const sweepline::intersection_t &lhs, const sweepline::intersection_t &rhs) {
+                return std::fabs(lhs.pt.x - rhs.pt.x) < geometry::EPS?
+                        lhs.pt.y < rhs.pt.y - geometry::EPS : lhs.pt.x < rhs.pt.x - geometry::EPS;
             }
         );
 
         // sort segments within each intersection and convert segment ids 0-based -> 1-based
-        std::for_each(received.begin(), received.end(), [](intersection_t &it) {
+        std::for_each(received.begin(), received.end(), [](sweepline::intersection_t &it) {
             std::sort(it.segments.begin(), it.segments.end());
             std::for_each(it.segments.begin(), it.segments.end(), [](size_t &idx) { ++idx; });
         });
@@ -105,7 +101,7 @@ protected:
 #define DO_EDGE_CASE(inputf)                                              \
     auto segments = input(inputf);                                        \
     auto expected = expected_output("expected/" inputf);                  \
-    auto received = normalize(Sweepline::find_intersections(segments));   \
+    auto received = normalize(sweepline::find_intersections(segments));   \
                                                                           \
     EXPECT_EQ(received.size(), expected.size());                          \
     for (size_t i = 0; i < expected.size(); i++) {                        \

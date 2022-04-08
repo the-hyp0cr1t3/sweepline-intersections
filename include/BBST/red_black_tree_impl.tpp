@@ -1,193 +1,169 @@
-#include <memory>
-#include <utility>
-#include <iostream>
-#include <algorithm>
+// This file is #included by red_black_tree.tpp
 
-namespace RBtree
-{
+namespace BBST {
 
-    template <class T, class Compare>
-    node_impl<T> *red_black_tree<T, Compare>::create_node(const T &key)
-    {
-        return new node(key); // memory leak incoming...
-    }
+template <class T, class Compare>
+node_impl<T> *red_black_tree<T, Compare>::create_node(const T &key) {
+    return new node(key); // memory leak incoming...
+}
 
-    template <class T>
-    node_impl<T> *node_impl<T>::prev(node_impl<T> *it)
-    {
+template <class T>
+node_impl<T> *node_impl<T>::prev(node_impl<T> *it) {
 
-        if (it == sentinel_ptr)
-            throw std::runtime_error("Attempt to decrement nullptrrr");
+    if(it == sentinel_ptr)
+        throw std::runtime_error("Attempt to decrement nullptr");
 
-        if (it->l != sentinel_ptr)
-        {
-            it = it->l;
+    if(it->l != sentinel_ptr) {
+        it = it->l;
 
-            while (it->r != sentinel_ptr)
-                it = it->r;
-        }
-        else
-        {
-
-            while (it->p != sentinel_ptr and it == it->p->l)
-                it = it->p;
-
-            it = it->p;
-        }
-
-        return it;
-    }
-
-    template <class T>
-    node_impl<T> *node_impl<T>::next(node_impl<T> *it)
-    {
-
-        if (it == sentinel_ptr)
-            throw std::runtime_error("Attempt to increment nullptrrr");
-
-        if (it->r != sentinel_ptr)
-        {
+        while(it->r != sentinel_ptr)
             it = it->r;
 
-            while (it->l != sentinel_ptr)
-                it = it->l;
-        }
-        else
-        {
+    } else {
 
-            while (it->p != sentinel_ptr and it == it->p->r)
-                it = it->p;
-
+        while(it->p != sentinel_ptr and it == it->p->l)
             it = it->p;
-        }
 
-        return it;
+        it = it->p;
     }
 
-    template <class T, class Compare>
-    void red_black_tree<T, Compare>::transplant(node *x, node *y)
-    {
-        if (x->p == sentinel_ptr)
-            root = y;
-        else if (x == x->p->l)
-            x->p->l = y;
-        else
-            x->p->r = y;
-        y->p = x->p;
+    return it;
+}
+
+template <class T>
+node_impl<T> *node_impl<T>::next(node_impl<T> *it) {
+
+    if(it == sentinel_ptr)
+        throw std::runtime_error("Attempt to increment nullptr");
+
+    if(it->r != sentinel_ptr) {
+        it = it->r;
+
+        while(it->l != sentinel_ptr)
+            it = it->l;
+
+    } else {
+
+        while(it->p != sentinel_ptr and it == it->p->r)
+            it = it->p;
+
+        it = it->p;
     }
 
-    template <class T, class Compare>
-    void red_black_tree<T, Compare>::left_rotate(node *x)
-    {
-        node *y = x->r;
-        x->r = y->l;
-        if (y->l != sentinel_ptr)
-            y->l->p = x;
+    return it;
+}
 
-        y->p = x->p;
-        if (y->p == sentinel_ptr)
-            root = y;
-        else if (x == x->p->l)
-            x->p->l = y;
-        else
-            x->p->r = y;
+template <class T, class Compare>
+void red_black_tree<T, Compare>::transplant(node *x, node *y) {
+    if(x->p == sentinel_ptr)
+        root = y;
+    else if(x == x->p->l)
+        x->p->l = y;
+    else
+        x->p->r = y;
+    y->p = x->p;
+}
 
-        y->l = x;
-        x->p = y;
-    }
+template <class T, class Compare>
+void red_black_tree<T, Compare>::left_rotate(node *x) {
+    node *y = x->r;
+    x->r = y->l;
+    if(y->l != sentinel_ptr)
+        y->l->p = x;
 
-    template <class T, class Compare>
-    void red_black_tree<T, Compare>::right_rotate(node *y)
-    {
-        node *x = y->l;
-        y->l = x->r;
-        if (x->r != sentinel_ptr)
-            x->r->p = y;
+    y->p = x->p;
+    if(y->p == sentinel_ptr)
+        root = y;
+    else if(x == x->p->l)
+        x->p->l = y;
+    else
+        x->p->r = y;
 
-        x->p = y->p;
-        if (y->p == sentinel_ptr)
-            root = x;
-        else if (y == y->p->l)
-            y->p->l = x;
-        else
-            y->p->r = x;
+    y->l = x;
+    x->p = y;
+}
 
-        x->r = y;
-        y->p = x;
-    }
+template <class T, class Compare>
+void red_black_tree<T, Compare>::right_rotate(node *y) {
+    node *x = y->l;
+    y->l = x->r;
+    if(x->r != sentinel_ptr)
+        x->r->p = y;
 
-    template <class T, class Compare>
-    void red_black_tree<T, Compare>::fix_insert(node *z)
-    {
-        while (z->p->col == RED)
-        {
+    x->p = y->p;
+    if(y->p == sentinel_ptr)
+        root = x;
+    else if(y == y->p->l)
+        y->p->l = x;
+    else
+        y->p->r = x;
 
-            if (z->p == z->p->p->l)
-            {
-                node *y = z->p->p->r;
+    x->r = y;
+    y->p = x;
+}
 
-                if (y->col == RED)
-                {
-                    z->p->col = y->col = BLACK;
-                    z->p->p->col = RED;
-                    z = z->p->p;
-                }
-                else
-                {
-                    if (z == z->p->r)
-                        left_rotate(z = z->p);
+template <class T, class Compare>
+void red_black_tree<T, Compare>::fix_insert(node *z) {
 
-                    z->p->col = BLACK;
-                    z->p->p->col = RED;
-                    right_rotate(z->p->p);
-                }
+    while(z->p->col == RED) {
+
+        if(z->p == z->p->p->l) {
+            node *y = z->p->p->r;
+
+            if(y->col == RED) {
+                z->p->col = y->col = BLACK;
+                z->p->p->col = RED;
+                z = z->p->p;
+
+            } else {
+                if(z == z->p->r)
+                    left_rotate(z = z->p);
+
+                z->p->col = BLACK;
+                z->p->p->col = RED;
+                right_rotate(z->p->p);
             }
-            else
-            {
-                node *y = z->p->p->l;
 
-                if (y->col == RED)
-                {
-                    z->p->col = y->col = BLACK;
-                    z->p->p->col = RED;
-                    z = z->p->p;
-                }
-                else
-                {
-                    if (z == z->p->l)
-                        right_rotate(z = z->p);
+        } else {
+            node *y = z->p->p->l;
 
-                    z->p->col = BLACK;
-                    z->p->p->col = RED;
-                    left_rotate(z->p->p);
-                }
+            if(y->col == RED) {
+                z->p->col = y->col = BLACK;
+                z->p->p->col = RED;
+                z = z->p->p;
+
+            } else {
+                if(z == z->p->l)
+                    right_rotate(z = z->p);
+
+                z->p->col = BLACK;
+                z->p->p->col = RED;
+                left_rotate(z->p->p);
             }
-        }
 
-        root->col = BLACK;
+        }
     }
 
-    template <class T, class Compare>
-    void red_black_tree<T, Compare>::fix_erase(node *x)
-    {
+    root->col = BLACK;
+}
 
-        while (x != root and x->col == BLACK)
-        {
+template <class T, class Compare>
+void red_black_tree<T, Compare>::fix_erase(node *x) {
 
-            if (x == x->p->l)
-            {
-                node *w = x->p->r;
+    while(x != root and x->col == BLACK) {
 
-                if (w->col == RED)
-                {
-                    w->col = BLACK;
-                    x->p->col = RED;
-                    left_rotate(x->p);
-                    w = x->p->r;
-                }
+        if(x == x->p->l) {
+            node *w = x->p->r;
 
-                if (w->l->col == BLACK and w->r->col == BLACK)
-                {
+            if(w->col == RED) {
+                w->col = BLACK;
+                x->p->col = RED;
+                left_rotate(x->p);
+                w = x->p->r;
+            }
+
+            if(w->l->col == BLACK
+                and w->r->col == BLACK) {
                     w->col = RED;
                     x = x->p;
 
@@ -439,4 +415,4 @@ typename red_black_tree<T, Compare>::iterator red_black_tree<T, Compare>::erase(
     return nxt;
 }
 
-} // namespace RBtree
+} // namespace BBST

@@ -1,17 +1,19 @@
 /**
  * @file iterator.tpp
  * @author the-hyp0cr1t3
- * @brief Describes an STL-like raw iterator template for the rbtree
+ * @brief Describes an STL-like raw iterator template for the BBST
  * @date 2022-03-25
  */
 #pragma once
+
+namespace BBST {
 
 // template <typename T>
 // concept has_key = requires(T x) { x.key; };      // C++20 only
 
 /**
  * @class raw_iterator
- * @brief STL-like raw iterator template for the rbtree
+ * @brief STL-like raw iterator template for the BBST
  *
  * @tparam node_t The node type
  * @tparam key_t The key type
@@ -184,3 +186,5 @@ protected:
     /// The underlying node pointer
     node_t *m_ptr;
 };
+
+} // namespace BBST

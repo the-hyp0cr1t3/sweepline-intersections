@@ -5,9 +5,11 @@
  * @date 2022-03-25
  */
 #pragma once
+
 #include <limits>
 
-namespace Sweepline::Geometry {
+
+namespace geometry {
 
   /// Underlying type for all computations
   using float_t = double;
@@ -19,4 +21,4 @@ namespace Sweepline::Geometry {
   inline constexpr float_t EPS_INC = 5 * EPS;
   /// \endcond
 
-} // namespace Sweepline::Geometry
+} // namespace geometry

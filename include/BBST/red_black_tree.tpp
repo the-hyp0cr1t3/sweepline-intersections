@@ -1,19 +1,21 @@
 /**
- * @file rbtree.tpp
+ * @file red_black_tree.tpp
  * @author the-hyp0cr1t3
- * @brief Red black tree template class
+ * @brief Red Black Tree template class definition
  * @date 2022-03-25
  */
 #pragma once
 
 #include <iterator.tpp>
+
 #include <memory>
 #include <utility>
 #include <iostream>
 #include <algorithm>
 #include <type_traits>
 
-namespace RBtree {
+
+namespace BBST {
 
 /// An enum for the colour of the rbtree nodes
 enum color {
@@ -102,7 +104,7 @@ node_impl<T> *get_sentinel() {
  *
  * int main() {
  *     std::vector<int> v{100, 200, 200, 300};
- *     RBtree::red_black_tree<int> rbtree{3, 3, 4, -2, 5, -1, 5};
+ *     BBST::red_black_tree<int> rbtree{3, 3, 4, -2, 5, -1, 5};
  *     rbtree.erase(4);
  *     rbtree.insert(20);
  *     rbtree.insert(20);
@@ -126,11 +128,11 @@ node_impl<T> *get_sentinel() {
  *     auto cmp = [](const Box &a, const Box &b) {
  *         return a.area() < b.area();
  *     };
- *     RBtree::red_black_tree<Box, decltype(cmp)> custom_rbtree(cmp);
+ *     BBST::red_black_tree<Box, decltype(cmp)> custom_rbtree(cmp);
  *
  *
  *     // custom compare method 2:
- *     RBtree::red_black_tree custom_rbtree(
+ *     BBST::red_black_tree custom_rbtree(
  *         Box{},
  *         [](const Box &a, const Box &b) {
  *             return a.area() < b.area();
@@ -413,6 +415,6 @@ public:
 template <class T, class Compare>
 red_black_tree(T, Compare) -> red_black_tree<T, Compare>;
 
-} // namespace RBtree
+} // namespace BBST
 
-#include <rbtree_impl.tpp>
+#include <red_black_tree_impl.tpp>

@@ -1,16 +1,15 @@
 /**
  * @file segment.hpp
  * @author the-hyp0cr1t3
- * @brief Describes the segment_t struct
+ * @brief Describes the Segment struct
  * @date 2022-03-25
  */
 #pragma once
-#include <sweepline/geometry/point.hpp>
 
-namespace Sweepline::Geometry {
+#include <point.hpp>
 
-  /// A namespace global variable which stores the current X coordinate of the vertical sweepline
-  extern float_t sweeplineX;
+
+namespace geometry {
 
   /**
    * @brief Segment struct which encapsulates information about a segment
@@ -99,4 +98,4 @@ namespace Sweepline::Geometry {
    */
   point_t intersection_point(const segment_t &a, const segment_t &b);
 
-} // namespace Sweepline::Geometry
+} // namespace geometry
