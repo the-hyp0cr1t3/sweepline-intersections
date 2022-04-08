@@ -16,10 +16,8 @@
 #define format_col(enable_color, ts, argn...) \
   fmt::format((enable_color? ts : fmt::v8::text_style()), argn)
 
-/**
- * @namespace Utils
- */
-namespace Utils {
+
+namespace utils {
 
   /**
    * @brief Safely opens a file, otherwise throws an exception
@@ -59,4 +57,4 @@ namespace Utils {
    */
   args parse_args_and_redirect_streams(int argc, char *argv[]);
 
-} // namespace Utils
+} // namespace utils

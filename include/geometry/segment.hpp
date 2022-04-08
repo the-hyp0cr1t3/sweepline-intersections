@@ -40,10 +40,10 @@ namespace geometry {
      * to make comparisons between events and establish an ordering.
      *
      * Compares y coordinates of segments by calling `segment_t::eval_y()` with the current x coordinate of the sweepline. <br>
-     * All floating point comparisons are done within a neighbourhood of `::EPS`.
+     * All floating point comparisons are done within a neighbourhood of `geometry::EPS`.
      *
      * @param s The other segment to compare to
-     * @return `true` if the y coordinate corresponding to `::sweeplineX` is lesser than the other segment's
+     * @return `true` if the y coordinate corresponding to `sweepline::sweeplineX` is lesser than the other segment's
      * @return `false` otherwise
      */
     bool operator < (const segment_t &s) const;

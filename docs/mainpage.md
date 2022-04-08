@@ -3,4 +3,4 @@
 
 This is a modern C++ implementation of the [Bentley-Ottman algorithm](https://en.wikipedia.org/wiki/Bentley%E2%80%93Ottmann_algorithm) from (almost) scratch because why not.
 
-The main function is `::find_intersections()`.
+The main function is `sweepline::find_intersections()`.

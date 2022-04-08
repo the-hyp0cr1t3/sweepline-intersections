@@ -26,10 +26,10 @@ namespace geometry {
     /**
      * @brief Overloading the == operator for point_t
      *
-     * All floating point comparisons are done within a neighbourhood of `::EPS`.
+     * All floating point comparisons are done within a neighbourhood of `geometry::EPS`.
      *
      * @param other The other point this is being compared to
-     * @return `true` if both the x and y coordinates match with max permissible error `::EPS`
+     * @return `true` if both the x and y coordinates match with max permissible error `geometry::EPS`
      * @return `false` otherwise
      */
     bool operator == (const point_t &other) const;

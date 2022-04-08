@@ -94,7 +94,7 @@ void output(const std::vector<sweepline::intersection_t> &result, bool enable_co
  *
  * **Example** `./app --verbose -i sample_test.txt -nc --outputf ~/outfile.txt`
  *
- * Flag             |                 Description                                                           |
+ * Flag             |                                   Description                                         |
  * :--------------: | :------------------------------------------------------------------------------------ |
  * `-h --help`     	| shows help message and exits [default: false]                                         |
  * `-v --version`  	| prints version information and exits [default: false]                                 |
@@ -111,7 +111,7 @@ void output(const std::vector<sweepline::intersection_t> &result, bool enable_co
 int main(int argc, char *argv[]) {
 
     // parsing command line arguments and redirecting input/output streams to specified files
-    auto params = Utils::parse_args_and_redirect_streams(argc, argv);
+    auto params = utils::parse_args_and_redirect_streams(argc, argv);
 
     // reading input
     std::vector<geometry::segment_t> segments = input();

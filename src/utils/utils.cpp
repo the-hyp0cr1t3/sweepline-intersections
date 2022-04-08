@@ -23,7 +23,7 @@ namespace detail {
 
 } // namespace detail
 
-void Utils::open_file(std::ifstream &inFile, const std::string &fname) {
+void utils::open_file(std::ifstream &inFile, const std::string &fname) {
     inFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
 
     try {
@@ -43,7 +43,7 @@ void Utils::open_file(std::ifstream &inFile, const std::string &fname) {
     inFile.exceptions(std::ifstream::badbit);
 }
 
-Utils::args Utils::parse_args_and_redirect_streams(int argc, char *argv[]) {
+utils::args utils::parse_args_and_redirect_streams(int argc, char *argv[]) {
     argparse::ArgumentParser program("./app", "2.0");
 
     program.add_argument("-i", "--inputf")
@@ -88,7 +88,7 @@ Utils::args Utils::parse_args_and_redirect_streams(int argc, char *argv[]) {
             format_col(params.enable_color, fg(fmt::color::yellow_green), "{}", *p));
 
         params.inputf = *p;
-        Utils::open_file(detail::fin, *p);
+        utils::open_file(detail::fin, *p);
         std::cin.rdbuf(detail::fin.rdbuf());
     } else {
         fmt::print("> {} stream specified:  {}\n",

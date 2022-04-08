@@ -54,7 +54,7 @@ namespace sweepline {
      * to make comparisons between events and establish an ordering.
      *
      * Compares on, in decreasing priority, the tuple `<p.x, p.y, p.seg_id>`. <br>
-     * All floating point comparisons are done within a neighbourhood of `::EPS`.
+     * All floating point comparisons are done within a neighbourhood of `geometry::EPS`.
      *
      * @param e The other event to be compared to
      * @return `true` if it compares less than the other event

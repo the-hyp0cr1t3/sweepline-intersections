@@ -232,7 +232,8 @@ public:
     /**
      * @brief Construct a new red black tree object
      *
-     * @param cmp The compare functor
+     * @param T The type of the key
+     * @param _cmp The compare functor
      */
     red_black_tree(T, Compare &&_cmp);
 
