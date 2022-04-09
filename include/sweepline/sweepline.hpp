@@ -28,10 +28,6 @@ namespace sweepline {
     std::vector<size_t> segments;   ///< A list of segments (their ids) which intersect at this point
   };
 
-  template <typename T>
-  using bbst = BBST::red_black_tree<T>;
-  // using bbst = std::set<T>; // works with std::set in exactly the same way (don't forget to #include <set>)
-
   /**
    * @brief Finds which segments intersect at which points and returns all such intersections
    * @pre \f$ p \le q \f$ must hold for each line segment in the list.
@@ -57,6 +53,10 @@ namespace sweepline {
     bool verbose = false,
     bool enable_color = true
   );
+
+  template <typename T>
+  using bbst = BBST::red_black_tree<T>;   ///< Type alias for the underlying BBST used. Works with std::set in exactly the same way as well.
+  // using bbst = std::set<T>; // works with std::set in exactly the same way (don't forget to #include <set>)
 
   /**
    * @brief A utility class instantiated by `find_intersections()`
