@@ -198,6 +198,15 @@ namespace detail {
 
 } // namespace detail
 
+std::vector<sweepline::intersection_t> sweepline::find_intersections(
+  const std::vector<geometry::segment_t> &line_segments,
+  bool verbose,
+  bool enable_color
+) {
+
+  return sweepline::solver(line_segments, verbose, enable_color).solve();
+}
+
 geometry::float_t sweepline::sweeplineX;
 
 sweepline::solver::solver(const std::vector<geometry::segment_t> &line_segments, bool verbose, bool enable_color)
@@ -496,13 +505,4 @@ void sweepline::solver::merge_intersection_points() {
   }
 
   result = std::move(merged);
-}
-
-auto sweepline::find_intersections(
-  const std::vector<geometry::segment_t> &line_segments,
-  bool verbose,
-  bool enable_color
-) -> std::vector<sweepline::intersection_t> {
-
-  return sweepline::solver(line_segments, verbose, enable_color).solve();
 }
