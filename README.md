@@ -76,7 +76,7 @@ Python script to run the app against some input and plot a graph with [matplotli
 
 ```sh
 cd scripts
-python3 run.py [input_file_path]
+./run.py [input_file_path]
 ```
 
 **Note:** `input_file_path` may also be relative to `./data`.
