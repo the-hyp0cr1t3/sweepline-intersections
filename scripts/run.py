@@ -56,7 +56,7 @@ def plotData(data, ax=None, markerSize=50, monochrome = False):
         # Plot the intersection points
         ax.scatter(point[0], point[1], color="orange", edgecolors="black", s=markerSize, zorder=3)
         scatterpoint = mlines.Line2D([], [], color="orange", marker="o", markersize=10, markeredgecolor="black", markeredgewidth=1.5, ls="")
-        ax.legend(handles=[scatterpoint], labels=[len(data["points"])], loc="upper right", prop={'size': 20, 'weight': 'bold'}, framealpha=1)
+        # ax.legend(handles=[scatterpoint], labels=[len(data["points"])], loc="upper right", prop={'size': 20, 'weight': 'bold'}, framealpha=1)
     plt.show()
 
 def main():

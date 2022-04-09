@@ -218,7 +218,7 @@ private:
     /**
      * @brief Restores rbtree properties after an erase through a series of rotations and transplants
      *
-     * @param it Successor of erased node
+     * @param x Successor of erased node
      */
     void fix_erase(node *x);
 
@@ -270,25 +270,25 @@ public:
 
     /**
      * @brief Gets the begin iterator
-     * @return iterator begin
+     * @return `iterator` begin
      */
     iterator begin() const { return leftmost; }
 
     /**
      * @brief Gets the end iterator
-     * @return iterator end
+     * @return `iterator` end
      */
     iterator end() const { return iterator { sentinel_ptr }; }
 
     /**
      * @brief Gets the begin const iterator
-     * @return iterator begin
+     * @return `iterator` begin
      */
     iterator cbegin() const { return cleftmost; }
 
     /**
      * @brief Gets the end const iterator
-     * @return iterator end
+     * @return `iterator` end
      */
     iterator cend() const { return const_iterator { sentinel_ptr }; }
 
@@ -297,15 +297,15 @@ public:
     /**
      * @brief Gets the size of the tree, i.e. the number of nodes
      *
-     * @return size_t The size of the tree
+     * @return `size_t` The size of the tree
      */
     size_t size() const { return sz;  };
 
     /**
      * @brief Checks whether the rbtree is empty or not
      *
-     * @return true if the rbtree has no nodes
-     * @return false otherwise
+     * @return `true` if the rbtree has no nodes
+     * @return `false` otherwise
      */
     bool  empty() const { return !sz; };
 
@@ -313,7 +313,7 @@ public:
      * @brief Searches for an element with a given key
      *
      * @param key The key to be searched
-     * @return iterator An iterator to the element in case it is found, else end()
+     * @return `iterator` An iterator to the element in case it is found, else end()
      */
     iterator find(const T &key) const;
 
@@ -321,8 +321,8 @@ public:
      * @brief Checks if a key exists
      *
      * @param key The key to check
-     * @return true if the key exists in the tree
-     * @return false otherwise
+     * @return `true` if the key exists in the tree
+     * @return `false` otherwise
      */
     bool contains(const T &key) const;
 
@@ -330,7 +330,7 @@ public:
      * @brief Returns an iterator pointing to the first element that is not less than (i.e. greater or equal to) key, or end if no such element is found.
      *
      * @param key The key value
-     * @return iterator Iterator pointing to the first element that is not less than value, or end if no such element is found
+     * @return `iterator` Iterator pointing to the first element that is not less than value, or end if no such element is found
      */
     iterator lower_bound(const T &key) const;
 
@@ -338,7 +338,7 @@ public:
      * @brief Returns an iterator pointing to the first element that is greater than value, or end if no such element is found.
      *
      * @param key The key value
-     * @return iterator Iterator pointing to the first element that is greater than value, or end if no such element is found.
+     * @return `iterator` Iterator pointing to the first element that is greater than value, or end if no such element is found.
      */
     iterator upper_bound(const T &key) const;
 
