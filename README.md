@@ -90,8 +90,9 @@ cd scripts
 This project uses [GoogleTest](https://github.com/google/googletest) for its unit tests and [GoogleBenchmark](https://github.com/google/benchmark) for benchmarking.
 
 #### Testing `find_intersections()` against various edge cases:
-```cmake
-cmake --build build --target test
+```sh
+cd build
+ctest -R EdgeCases -j6
 ```
 
 #### Stress testing the Red Black tree implementation:
@@ -105,7 +106,7 @@ cd scripts
 ./bin/bench --benchmark_counters_tabular=true
 ```
 
-```
+```python
 2022-03-31T04:19:51+05:30
 Running ./bench
 Run on (12 X 3000 MHz CPU s)
