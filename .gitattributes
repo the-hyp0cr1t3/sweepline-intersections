@@ -1,4 +1,3 @@
-docs/* linguist-detectable=false
-report/*.ipynb linguist-detectable=false
+docs/html/* linguist-detectable=false
 report/*.html linguist-detectable=false
 include/utils/utils.hpp.in linguist-language=C++
