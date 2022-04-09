@@ -7,17 +7,17 @@ add_library(sweepline STATIC
   # headers are optional, but won't show up nicely in IDEs unless listed
   "${CMAKE_SOURCE_DIR}/include/sweepline/event.hpp"
   "${CMAKE_SOURCE_DIR}/include/sweepline/sweepline.hpp"
+  "${CMAKE_SOURCE_DIR}/include/BBST/red_black_tree.tpp"
 )
 
-# PUBLIC because users of our library will need it too
-target_include_directories(sweepline PUBLIC
-  "${CMAKE_SOURCE_DIR}/include/sweepline"
+target_include_directories(sweepline
+  PUBLIC "${CMAKE_SOURCE_DIR}/include/sweepline"
 )
 
 target_link_libraries(sweepline
   PUBLIC
     geometry
-  PRIVATE
     bbst
+  PRIVATE
     fmt::fmt
 )

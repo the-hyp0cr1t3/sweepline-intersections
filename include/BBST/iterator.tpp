@@ -6,6 +6,8 @@
  */
 #pragma once
 
+#include <iterator>
+
 namespace BBST {
 
 // template <typename T>

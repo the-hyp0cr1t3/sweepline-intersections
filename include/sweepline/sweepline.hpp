@@ -6,13 +6,15 @@
  */
 #pragma once
 
+#include <red_black_tree.tpp>
 #include <point.hpp>
 #include <segment.hpp>
 #include <event.hpp>
 
 #include <vector>
+#include <array>
 #include <utility>
-
+#include <set>
 
 namespace sweepline {
 
@@ -25,6 +27,40 @@ namespace sweepline {
   struct intersection_t {
     geometry::point_t pt;   ///< The point of intersection of some segments
     std::vector<size_t> segments;   ///< A list of segments (their ids) which intersect at this point
+  };
+
+  template <typename T>
+  using bbst = BBST::red_black_tree<T>;
+  // using bbst = std::set<T>; // works with std::set in exactly the same way (don't forget to #include <set>)
+
+  class solver {
+    bool verbose;
+    std::vector<geometry::segment_t> line_segments;
+    std::vector<sweepline::intersection_t> result;
+
+    bbst<sweepline::event_t> event_queue;
+    bbst<geometry::segment_t> seg_ordering;
+    std::vector<geometry::segment_t> vertical_segs;
+
+    // impl
+    size_t vert_idx = 0;
+    geometry::float_t max_y, min_y;
+
+  public:
+    solver(const std::vector<geometry::segment_t> &line_segments, bool verbose, bool enable_color);
+
+    std::vector<sweepline::intersection_t> solve();
+
+  private:
+    void init_event_queue();
+    void find_vertical_vertical_intersections();
+    void find_vertical_nonvertical_intersections(geometry::float_t max_vsegx);
+    std::array<std::vector<size_t>, 3> get_active_segs(sweepline::event_t top);
+    void update_segment_ordering(const std::array<std::vector<size_t>, 3> &active_segs);
+    void handle_no_newly_inserted(geometry::point_t cur);
+    void handle_extremes_of_newly_inserted();
+    void report_intersection(geometry::point_t cur, std::array<std::vector<size_t>, 3> &&active_segs);
+    void merge_intersection_points();
   };
 
   /**
