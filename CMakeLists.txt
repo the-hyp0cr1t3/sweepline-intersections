@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.17)
 
 project(
-  sweepline_intersections
+  "Sweepline Intersections"
     VERSION 2.0
     LANGUAGES CXX
     DESCRIPTION "Given n line segments, efficiently find \
