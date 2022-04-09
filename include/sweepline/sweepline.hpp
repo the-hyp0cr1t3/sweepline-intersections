@@ -14,7 +14,6 @@
 #include <vector>
 #include <array>
 #include <utility>
-#include <set>
 
 namespace sweepline {
 
@@ -156,9 +155,38 @@ namespace sweepline {
      */
     void update_segment_ordering(const std::array<std::vector<size_t>, 3> &active_segs);
 
+    /**
+     * @brief Tests for new event points after updating `solver::seg_ordering` in the case when no new segments are inserted
+     *
+     * If no segments were newly inserted, the immediate left and right neighbours
+     * of the deleted set of segments become adjacent candidates for intersection.
+     *
+     * @param cur The current point being processed
+     */
     void handle_no_newly_inserted(geometry::point_t cur);
+
+    /**
+     * @brief Tests for new event points after updating `solver::seg_ordering` in the case when some new segments are inserted
+     *
+     * If some segments were newly inserted,
+     * the left and right extremes among the set of newly inserted segments
+     * must be checked for intersection with their immediate left and right neighbours respectively.
+     *
+     */
     void handle_extremes_of_newly_inserted();
+
+    /**
+     * @brief Reports an intersection between teo or more (non-vertical) line segments
+     *
+     * @param cur The point of intersection
+     * @param active_segs The line segments that intersect at \a cur
+     */
     void report_intersection(geometry::point_t cur, std::array<std::vector<size_t>, 3> &&active_segs);
+
+    /**
+     * @brief Merge intersections which have the same point
+     *
+     */
     void merge_intersection_points();
 
     /// \cond

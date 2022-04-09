@@ -248,6 +248,7 @@ std::vector<sweepline::intersection_t> sweepline::solver::solve() {
     // returns three arrays of active segment indices corresponding to event_t::type
     auto active_segs = get_active_segs(top);
 
+    // remove all end points, insert all begin points and reorder the interior points
     update_segment_ordering(active_segs);
 
     // if no segments were newly inserted, the immediate left and right neighbours

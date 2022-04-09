@@ -93,7 +93,7 @@ node_impl<T> *get_sentinel() {
  * @code
  * #include <iostream>
  * #include <vector>
- * #include <rbtree.tpp>
+ * #include <red_black_tree.tpp>
  *
  * struct Box {
  *     int length, breadth;
